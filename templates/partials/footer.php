@@ -11,6 +11,7 @@
       <ul>
         <li><a href="/">Главная</a></li>
         <li><a href="/catalog/zagruzchiki-suhih-kormov/">Каталог техники</a></li>
+        <li><a href="/documents/">Документы и декларации</a></li>
         <li><a href="/privacy/">Политика конфиденциальности</a></li>
       </ul>
     </nav>

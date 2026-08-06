@@ -104,6 +104,20 @@ test('privacy publishes approved operator details and contact', function (): voi
     truthy(str_contains($html, 'id="cookies"'));
 });
 
+test('documents page renders two accessible declaration cards', function (): void {
+    $html = render_page('documents', [
+        'seo' => seo_for_page('documents'),
+        'documents' => all_documents(),
+        'schemas' => [],
+    ]);
+    same(2, substr_count($html, 'class="document-card"'));
+    truthy(str_contains($html, 'ЕАЭС N RU Д-RU.РА04.В.69139/26'));
+    truthy(str_contains($html, 'ЕАЭС N RU Д-RU.РА05.В.72423/26'));
+    truthy(str_contains($html, 'target="_blank"'));
+    truthy(str_contains($html, ' download'));
+    truthy(str_contains($html, 'href="/documents/"'));
+});
+
 test('404 page offers routes back to useful content', function (): void {
     $view = $GLOBALS['root'] . '/templates/pages/404.php';
     truthy(is_file($view));

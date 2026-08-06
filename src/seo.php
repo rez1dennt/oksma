@@ -40,6 +40,14 @@ function seo_for_page(string $type, ?array $entity = null): array
         ]);
     }
 
+    if ($type === 'documents') {
+        return array_replace($seo, [
+            'title' => 'Документы и декларации на технику — ОКСМА',
+            'description' => 'Действующие декларации о соответствии на прицепные загрузчики, цистерны, полуприцепы и прицепы ОКСМА.',
+            'canonical' => site_url('/documents/'),
+        ]);
+    }
+
     if ($type === '404') {
         return array_replace($seo, [
             'title' => 'Страница не найдена — ОКСМА',
@@ -107,7 +115,7 @@ function product_schema(array $product): array
 
 function sitemap_urls(): array
 {
-    $urls = [site_url('/'), site_url('/privacy/')];
+    $urls = [site_url('/'), site_url('/documents/'), site_url('/privacy/')];
 
     foreach (catalog_categories() as $category) {
         $urls[] = site_url("/catalog/{$category['slug']}/");

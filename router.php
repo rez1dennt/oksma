@@ -17,6 +17,7 @@ $controller = match ($route['name']) {
     'category' => 'catalog.php',
     'product' => 'product.php',
     'privacy' => 'privacy.php',
+    'documents' => 'documents.php',
     'sitemap' => 'sitemap.php',
     'robots' => 'robots.php',
     default => '404.php',

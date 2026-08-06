@@ -15,6 +15,10 @@ function resolve_route(string $path): array
         return ['name' => 'privacy'];
     }
 
+    if ($normalized === 'documents') {
+        return ['name' => 'documents'];
+    }
+
     if ($normalized === 'sitemap.xml') {
         return ['name' => 'sitemap'];
     }
