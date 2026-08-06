@@ -39,6 +39,12 @@
   --color-glass-border: rgb(255 253 250 / 72%);
   --color-surface-dark: #25302d;
   --color-surface-dark-raised: #323d39;
+  --color-footer-bg: #211d17;
+  --color-footer-raised: #2f291f;
+  --color-footer-text: #fff8e9;
+  --color-footer-muted: #d9cfb7;
+  --color-footer-accent: #e7cb83;
+  --color-footer-accent-hover: #fff3cf;
   --color-border-default: #dedbd3;
   --color-border-strong: #7c8782;
   --color-border-focus: #c52d23;

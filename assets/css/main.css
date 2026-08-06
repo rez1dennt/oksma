@@ -103,12 +103,14 @@ p { max-width: var(--measure); }
 .cookie-notice p { margin: 0; font-size: var(--font-size-sm); }
 .cookie-notice a { color: var(--color-text-on-dark); }
 
-.site-footer { padding-block: var(--space-16) var(--space-6); color: var(--color-text-on-dark); background: var(--color-surface-dark); }
+.site-footer { padding-block: var(--space-16) var(--space-6); color: var(--color-footer-text); background: var(--color-footer-bg); }
 .site-footer__grid { display: grid; gap: var(--space-10); }
-.site-footer__brand p { color: var(--color-text-tertiary); }
-.site-footer__title { font-size: var(--font-size-sm); letter-spacing: .1em; text-transform: uppercase; }
-.site-footer nav a, .site-footer__contacts a { display: flex; align-items: center; gap: var(--space-2); padding-block: var(--space-2); color: var(--color-text-on-dark); text-decoration: none; }
-.site-footer__legal { display: flex; flex-direction: column; gap: var(--space-2); margin-block-start: var(--space-12); padding-block-start: var(--space-5); color: var(--color-text-tertiary); font-size: var(--font-size-xs); border-block-start: var(--border-thin) solid var(--color-surface-dark-raised); }
+.site-footer__brand p, .site-footer__legal { color: var(--color-footer-muted); }
+.site-footer__title { color: var(--color-footer-accent); font-size: var(--font-size-sm); letter-spacing: .1em; text-transform: uppercase; }
+.site-footer nav a, .site-footer__contacts a { display: flex; align-items: center; gap: var(--space-2); padding-block: var(--space-2); color: var(--color-footer-text); text-decoration: none; transition: color var(--duration-fast) var(--ease-standard); }
+.site-footer nav a:hover, .site-footer__contacts a:hover { color: var(--color-footer-accent-hover); }
+.site-footer__contacts .icon { color: var(--color-footer-accent); }
+.site-footer__legal { display: flex; flex-direction: column; gap: var(--space-2); margin-block-start: var(--space-12); padding-block-start: var(--space-5); font-size: var(--font-size-xs); border-block-start: var(--border-thin) solid var(--color-footer-raised); }
 
 .hero { position: relative; isolation: isolate; min-height: 42rem; overflow: hidden; background: var(--color-surface-dark); }
 .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--hero-overlay); pointer-events: none; }

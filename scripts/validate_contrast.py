@@ -25,6 +25,9 @@ PAIRS = [
     ("semantic.text.link",      "semantic.surface.page", 4.5, "link on page"),
     ("semantic.text.on-action", "semantic.action.primary", 4.5, "text on primary action"),
     ("semantic.border.strong",  "semantic.surface.page", 3.0, "essential control border (WCAG 1.4.11)"),
+    ("semantic.footer.text",    "semantic.footer.background", 4.5, "footer text on warm graphite"),
+    ("semantic.footer.muted",   "semantic.footer.background", 4.5, "footer muted text on warm graphite"),
+    ("semantic.footer.accent",  "semantic.footer.background", 3.0, "footer gold accent on warm graphite"),
 ]
 
 # ADVISORY pairs — intentionally de-emphasized text/decoration. Reported, not failed:

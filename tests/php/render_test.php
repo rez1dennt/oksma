@@ -79,6 +79,15 @@ test('token files are valid DTCG JSON and theme exposes semantic variables', fun
     truthy(str_contains($theme, '--focus-ring'));
 });
 
+test('footer uses the shared warm gold token contract', function (): void {
+    $theme = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/theme.css');
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+    foreach (['--color-footer-bg', '--color-footer-text', '--color-footer-muted', '--color-footer-accent'] as $token) {
+        truthy(str_contains($theme, $token));
+    }
+    truthy((bool) preg_match('/\.site-footer\s*\{[^}]*background:\s*var\(--color-footer-bg\)/s', $css));
+});
+
 test('long responsive headings can wrap without clipping', function (): void {
     $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
 

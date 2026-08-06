@@ -29,6 +29,23 @@
       "900":{"$type":"color","$value":"#25302d","$description":"Deep green graphite"},
       "950":{"$type":"color","$value":"#202523","$description":"Primary ink"}
     },
+    "gold": {
+      "50":{"$type":"color","$value":"#fffaf0","$description":"Lightest champagne"},
+      "100":{"$type":"color","$value":"#fff3cf","$description":"Warm pale champagne"},
+      "200":{"$type":"color","$value":"#f4e1ad","$description":"Pale gold"},
+      "300":{"$type":"color","$value":"#e7cb83","$description":"Footer gold highlight"},
+      "400":{"$type":"color","$value":"#b88a32","$description":"Bright brand gold"},
+      "500":{"$type":"color","$value":"#8a641f","$description":"Accessible gold text on light surfaces"},
+      "600":{"$type":"color","$value":"#79561c","$description":"Gold hover on light surfaces"},
+      "700":{"$type":"color","$value":"#674817","$description":"Deep gold"},
+      "800":{"$type":"color","$value":"#503716","$description":"Darker gold"},
+      "900":{"$type":"color","$value":"#3a2917","$description":"Near-brown gold"},
+      "950":{"$type":"color","$value":"#241a10","$description":"Darkest gold"}
+    },
+    "warmDark": {
+      "900":{"$type":"color","$value":"#2f291f","$description":"Raised warm graphite"},
+      "950":{"$type":"color","$value":"#211d17","$description":"Footer warm graphite"}
+    },
     "surface": {
       "sand":{"$type":"color","$value":"#e7e3da","$description":"Warm request section"},
       "sage":{"$type":"color","$value":"#e3e7e1","$description":"Soft industrial accent surface"}
@@ -74,6 +91,14 @@
     "feedback": {
       "success":{"$type":"color","$value":"{primitive.green}","$description":"Success text and icon"},
       "error":{"$type":"color","$value":"{primitive.red.700}","$description":"Error text and icon"}
+    },
+    "footer": {
+      "background":{"$type":"color","$value":"{primitive.warmDark.950}","$description":"Warm graphite footer background"},
+      "raised":{"$type":"color","$value":"{primitive.warmDark.900}","$description":"Footer borders and raised surfaces"},
+      "text":{"$type":"color","$value":"#fff8e9","$description":"Primary footer text"},
+      "muted":{"$type":"color","$value":"#d9cfb7","$description":"Supporting footer text"},
+      "accent":{"$type":"color","$value":"{primitive.gold.300}","$description":"Gold footer accent"},
+      "accent-hover":{"$type":"color","$value":"{primitive.gold.100}","$description":"Footer link hover"}
     }
   },
   "component": {
