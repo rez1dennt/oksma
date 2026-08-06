@@ -1,0 +1,13 @@
+{
+  "name": "oksma/industrial-catalog",
+  "description": "Многостраничный каталог промышленной техники ОКСМА",
+  "type": "project",
+  "require": {
+    "php": ">=8.1",
+    "phpmailer/phpmailer": "^7.0"
+  },
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true
+  }
+}
