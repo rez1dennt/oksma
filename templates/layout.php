@@ -13,7 +13,7 @@
   <meta property="og:description" content="<?= e($seo['description']) ?>">
   <meta property="og:url" content="<?= e($seo['canonical']) ?>">
   <meta property="og:image" content="<?= e($seo['image']) ?>">
-  <meta name="theme-color" content="#181817">
+  <meta name="theme-color" content="#25302d">
   <link rel="stylesheet" href="/assets/css/theme.css">
   <link rel="stylesheet" href="/assets/css/main.css">
 <?php foreach ($schemas ?? [] as $schema): ?>
