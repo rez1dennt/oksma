@@ -28,3 +28,21 @@ test('all catalog raster assets exist and are valid webp images', function () us
         truthy($image[0] >= 300 && $image[1] >= 100);
     }
 });
+
+test('approved brand assets exist and are valid webp images', function () use ($root): void {
+    $paths = [
+        '/assets/images/logo-oksma-header-gold.webp',
+        '/assets/images/logo-oksma-footer-gold.webp',
+        '/assets/images/partner-stp-2008.webp',
+    ];
+
+    foreach ($paths as $path) {
+        $file = $root . str_replace('/', DIRECTORY_SEPARATOR, $path);
+        truthy(is_file($file));
+        truthy(filesize($file) > 1000);
+        $image = getimagesize($file);
+        truthy(is_array($image));
+        same('image/webp', $image['mime']);
+        truthy($image[0] >= 120 && $image[1] >= 40);
+    }
+});
