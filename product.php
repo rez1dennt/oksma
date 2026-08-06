@@ -25,6 +25,7 @@ echo render_page('product', [
     'product' => $product,
     'category' => $category,
     'related' => related_products($product),
+    'documents' => documents_for_product($product),
     'breadcrumbs' => $breadcrumbs,
     'schemas' => [organization_schema(), breadcrumb_schema($breadcrumbs), product_schema($product)],
     'pageClass' => 'page-product',

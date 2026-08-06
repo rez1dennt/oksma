@@ -25,3 +25,10 @@ test('document lookup requires explicit product identifiers', function (): void 
 test('document registry and public PDF assets pass integrity checks', function (): void {
     same([], document_integrity_errors(dirname(__DIR__, 2)));
 });
+
+test('catalog links the first declaration to PZK but never to ZSK', function (): void {
+    same(['feed-trailers-2026'], array_column(documents_for_product(find_product('pzk-10')), 'id'));
+    same(['feed-trailers-2026'], array_column(documents_for_product(find_product('pzk-15')), 'id'));
+    same([], documents_for_product(find_product('zsk-10')));
+    same([], document_integrity_errors(dirname(__DIR__, 2)));
+});

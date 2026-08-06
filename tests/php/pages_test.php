@@ -79,6 +79,7 @@ test('product renders gallery tabs specifications and related items', function (
         'product' => $product,
         'category' => find_category($product['category']),
         'related' => related_products($product),
+        'documents' => documents_for_product($product),
         'schemas' => [product_schema($product)],
     ]);
 
@@ -88,6 +89,32 @@ test('product renders gallery tabs specifications and related items', function (
     truthy(str_contains($html, 'Объём бункера'));
     truthy(str_contains($html, 'Похожие модели'));
     same(count($product['benefits']), substr_count($html, 'class="product-benefit__icon"'));
+});
+
+test('product documents tab is conditional and uses the shared declaration data', function (): void {
+    $pzk = find_product('pzk-10');
+    $pzkHtml = render_page('product', [
+        'seo' => seo_for_page('product', $pzk),
+        'product' => $pzk,
+        'category' => find_category($pzk['category']),
+        'related' => related_products($pzk),
+        'documents' => documents_for_product($pzk),
+        'schemas' => [product_schema($pzk)],
+    ]);
+    truthy(str_contains($pzkHtml, 'id="tab-documents"'));
+    truthy(str_contains($pzkHtml, 'ЕАЭС N RU Д-RU.РА04.В.69139/26'));
+
+    $zsk = find_product('zsk-10');
+    $zskHtml = render_page('product', [
+        'seo' => seo_for_page('product', $zsk),
+        'product' => $zsk,
+        'category' => find_category($zsk['category']),
+        'related' => related_products($zsk),
+        'documents' => documents_for_product($zsk),
+        'schemas' => [product_schema($zsk)],
+    ]);
+    truthy(!str_contains($zskHtml, 'id="tab-documents"'));
+    truthy(!str_contains($zskHtml, 'ЕАЭС N RU Д-RU.РА04.В.69139/26'));
 });
 
 test('privacy publishes approved operator details and contact', function (): void {

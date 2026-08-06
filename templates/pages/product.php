@@ -52,6 +52,9 @@
       <div class="tabs__list" role="tablist" aria-label="Информация о товаре">
         <button role="tab" id="tab-description" aria-selected="true" aria-controls="panel-description" tabindex="0">Описание</button>
         <button role="tab" id="tab-equipment" aria-selected="false" aria-controls="panel-equipment" tabindex="-1">Комплектация</button>
+        <?php if ($documents !== []): ?>
+          <button role="tab" id="tab-documents" aria-selected="false" aria-controls="panel-documents" tabindex="-1">Документы</button>
+        <?php endif; ?>
       </div>
       <div class="tabs__panel" role="tabpanel" id="panel-description" aria-labelledby="tab-description">
         <div class="spec-grid">
@@ -65,6 +68,15 @@
         <ul class="equipment-list"><?php foreach ($product['equipment'] as $item): ?><li><?= icon('check') ?><?= e($item) ?></li><?php endforeach; ?></ul>
         <button class="button button--primary" type="button" data-modal-open>Уточнить комплектацию</button>
       </div>
+      <?php if ($documents !== []): ?>
+        <div class="tabs__panel" role="tabpanel" id="panel-documents" aria-labelledby="tab-documents" hidden>
+          <div class="document-grid document-grid--product">
+            <?php foreach ($documents as $document): ?>
+              <?= render_partial('document-card', ['document' => $document, 'compact' => true]) ?>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </section>

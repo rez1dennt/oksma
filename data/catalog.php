@@ -130,6 +130,7 @@ return [
             'images' => ['/assets/images/product-pzk-10-1.webp'], 'benefits' => ['Простое обслуживание'],
             'specs' => ['Объём бункера' => '10 м³'], 'dimensions' => ['Длина' => '5 250 мм'],
             'equipment' => ['Опорное колесо'], 'related' => ['pzk-15', 'zsk-10'],
+            'document_ids' => ['feed-trailers-2026'],
             'seo_title' => 'ПЗК-10 — прицепной загрузчик кормов', 'seo_description' => 'Прицепной загрузчик кормов ПЗК-10.',
         ],
         'pzk-15' => [
@@ -140,6 +141,7 @@ return [
             'images' => ['/assets/images/product-pzk-15-1.webp'], 'benefits' => ['Вместительный бункер'],
             'specs' => ['Объём бункера' => '15 м³'], 'dimensions' => ['Длина' => '5 850 мм'],
             'equipment' => ['Опорное колесо'], 'related' => ['pzk-10'],
+            'document_ids' => ['feed-trailers-2026'],
             'seo_title' => 'ПЗК-15 — прицепной загрузчик кормов', 'seo_description' => 'Прицепной загрузчик ПЗК-15 для сухих кормов.',
         ],
     ],
