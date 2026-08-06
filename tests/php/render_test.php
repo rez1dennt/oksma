@@ -45,7 +45,8 @@ test('layout renders the shared accessible shell', function (): void {
     truthy(str_contains($html, 'aria-expanded="false"'));
     truthy(str_contains($html, 'data-modal'));
     truthy(str_contains($html, 'data-cookie-notice'));
-    truthy(str_contains($html, 'logo-oksma-dark.webp'));
+    truthy(str_contains($html, 'logo-oksma-header-gold.webp'));
+    truthy(str_contains($html, 'logo-oksma-footer-gold.webp'));
     truthy(str_contains($html, '+7 937 435-17-00'));
     truthy(str_contains($html, '<meta name="theme-color" content="#25302d">'));
     $headerClose = strpos($html, '</header>');

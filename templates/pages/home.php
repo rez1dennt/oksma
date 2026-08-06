@@ -57,11 +57,11 @@
 
 <section class="section trust-section">
   <div class="container">
-    <div class="section-heading section-heading--compact"><div><p class="eyebrow">Будущие партнёры</p><h2>Нам доверяют</h2></div><p>Здесь появятся логотипы ваших клиентов после согласования материалов.</p></div>
-    <div class="trust-grid" aria-label="Места для логотипов клиентов">
-      <?php for ($index = 1; $index <= 5; $index++): ?>
-        <div class="trust-mark"><span>Логотип</span><strong>Партнёр <?= str_pad((string) $index, 2, '0', STR_PAD_LEFT) ?></strong></div>
-      <?php endfor; ?>
+    <div class="section-heading section-heading--compact"><div><p class="eyebrow">Партнёры ОКСМА</p><h2>Нам доверяют</h2></div><p>Работаем с предприятиями, которым важны надёжность техники и ответственная поставка.</p></div>
+    <div class="trust-grid trust-grid--single" aria-label="Партнёры ОКСМА">
+      <div class="trust-mark trust-mark--partner">
+        <img src="/assets/images/partner-stp-2008.webp" width="174" height="180" alt="Логотип партнёра STP">
+      </div>
     </div>
   </div>
 </section>

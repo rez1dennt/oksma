@@ -37,6 +37,8 @@ test('home contains all required first-stage sections', function (): void {
     truthy(str_contains($html, 'class="hero__chip"'));
     truthy(strpos($html, 'class="hero__media"') < strpos($html, 'class="container hero__grid"'));
     truthy(str_contains($html, 'class="request-section__panel"'));
+    truthy(str_contains($html, 'partner-stp-2008.webp'));
+    same(0, substr_count($html, 'Партнёр 0'));
     same(4, substr_count($html, 'class="benefit-item__icon"'));
 });
 

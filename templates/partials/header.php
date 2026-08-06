@@ -1,8 +1,8 @@
 <?php $categories = array_values(catalog_categories()); ?>
 <header class="site-header" data-header>
   <div class="container site-header__inner">
-    <a class="brand" href="/" aria-label="ОКСМА, на главную">
-      <img src="/assets/images/logo-oksma-dark.webp" width="164" height="29" alt="ОКСМА">
+    <a class="brand brand--header-gold" href="/" aria-label="ОКСМА, на главную">
+      <img src="/assets/images/logo-oksma-header-gold.webp" width="420" height="76" alt="ОКСМА">
     </a>
     <nav class="desktop-nav" aria-label="Основная навигация">
       <ul>

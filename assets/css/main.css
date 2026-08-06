@@ -42,6 +42,8 @@ p { max-width: var(--measure); }
 .site-header__inner { min-height: var(--space-20); display: flex; align-items: center; gap: var(--space-6); }
 .brand { flex: 0 0 auto; display: inline-flex; align-items: center; }
 .brand img { width: 10.25rem; height: auto; }
+.brand--header-gold img { width: clamp(calc(var(--space-20) + var(--space-16)), 15vw, calc(var(--space-20) * 2.25)); }
+.brand--footer-mark img { width: calc(var(--space-20) + var(--space-12) + var(--space-1)); }
 .desktop-nav { display: none; margin-inline: auto; }
 .desktop-nav ul, .mobile-menu ul, .site-footer ul, .breadcrumbs ol { margin: 0; padding: 0; list-style: none; }
 .desktop-nav ul { display: flex; align-items: center; gap: clamp(var(--space-4), 2vw, var(--space-8)); }
@@ -151,6 +153,9 @@ p { max-width: var(--measure); }
 .trust-mark { min-height: 8rem; display: grid; place-content: center; gap: var(--space-1); padding: var(--space-4); text-align: center; background: var(--color-surface-page); border: var(--border-thin) solid var(--color-border-default); border-radius: var(--radius-md); }
 .trust-mark span { color: var(--color-text-tertiary); font-size: var(--font-size-xs); letter-spacing: .12em; text-transform: uppercase; }
 .trust-mark strong { font-size: var(--font-size-sm); }
+.trust-grid.trust-grid--single { grid-template-columns: minmax(0, calc(var(--space-24) * 4)); justify-content: center; }
+.trust-mark--partner { min-height: calc(var(--space-24) * 2); background: var(--color-surface-card); box-shadow: var(--shadow-card); }
+.trust-mark--partner img { width: auto; max-width: 100%; max-height: calc(var(--space-20) * 2.25); margin-inline: auto; object-fit: contain; }
 .request-section { padding-block: var(--space-section); color: var(--color-text-primary); background: var(--color-surface-page); }
 .request-section__panel { padding: clamp(var(--space-5), 4vw, var(--space-10)); background: var(--color-surface-tint); border: var(--border-thin) solid var(--color-border-default); border-radius: var(--radius-xl); }
 .request-section__grid { display: grid; gap: var(--space-12); }
