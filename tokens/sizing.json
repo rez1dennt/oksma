@@ -1,0 +1,7 @@
+{
+  "$schema":"https://design-tokens.github.io/community-group/format/",
+  "$description":"Controls, icons and content constraints.",
+  "control":{"sm":{"$type":"dimension","$value":"40px","$description":"Compact control"},"md":{"$type":"dimension","$value":"48px","$description":"Default touch control"},"lg":{"$type":"dimension","$value":"56px","$description":"Primary hero control"}},
+  "icon":{"sm":{"$type":"dimension","$value":"16px","$description":"Inline icon"},"md":{"$type":"dimension","$value":"20px","$description":"Control icon"},"lg":{"$type":"dimension","$value":"24px","$description":"Feature icon"}},
+  "container":{"$type":"dimension","$value":"1280px","$description":"Maximum content width"}
+}

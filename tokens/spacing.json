@@ -1,0 +1,6 @@
+{
+  "$schema":"https://design-tokens.github.io/community-group/format/",
+  "$description":"Four-pixel base spacing scale.",
+  "scale":{"1":{"$type":"dimension","$value":"4px","$description":"Base unit"},"2":{"$type":"dimension","$value":"8px","$description":"Tight gap"},"3":{"$type":"dimension","$value":"12px","$description":"Compact gap"},"4":{"$type":"dimension","$value":"16px","$description":"Default gap"},"5":{"$type":"dimension","$value":"20px","$description":"Control gap"},"6":{"$type":"dimension","$value":"24px","$description":"Group gap"},"8":{"$type":"dimension","$value":"32px","$description":"Large gap"},"10":{"$type":"dimension","$value":"40px","$description":"Block gap"},"12":{"$type":"dimension","$value":"48px","$description":"Large block gap"},"16":{"$type":"dimension","$value":"64px","$description":"Section gap"},"20":{"$type":"dimension","$value":"80px","$description":"Desktop section gap"},"24":{"$type":"dimension","$value":"96px","$description":"Hero gap"}},
+  "semantic":{"page":{"$type":"dimension","$value":"{scale.4}","$description":"Mobile page inset"},"card":{"$type":"dimension","$value":"{scale.6}","$description":"Card padding"},"section":{"$type":"dimension","$value":"{scale.20}","$description":"Section rhythm"}}
+}

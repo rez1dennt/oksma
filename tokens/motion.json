@@ -1,0 +1,6 @@
+{
+  "$schema":"https://design-tokens.github.io/community-group/format/",
+  "$description":"Subtle functional feedback with reduced-motion support.",
+  "duration":{"instant":{"$type":"duration","$value":"0ms","$description":"Reduced motion"},"fast":{"$type":"duration","$value":"120ms","$description":"Hover and press"},"base":{"$type":"duration","$value":"220ms","$description":"State transition"},"moderate":{"$type":"duration","$value":"320ms","$description":"Dialog and drawer"}},
+  "easing":{"standard":{"$type":"cubicBezier","$value":[0.2,0,0,1],"$description":"Confident deceleration"}}
+}

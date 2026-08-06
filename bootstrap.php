@@ -18,6 +18,7 @@ if (is_file($autoload)) {
 require_once __DIR__ . '/src/catalog.php';
 require_once __DIR__ . '/src/router.php';
 require_once __DIR__ . '/src/seo.php';
+require_once __DIR__ . '/src/render.php';
 
 if (PHP_SAPI !== 'cli' && session_status() !== PHP_SESSION_ACTIVE) {
     session_set_cookie_params([

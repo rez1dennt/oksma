@@ -1,0 +1,19 @@
+{
+  "$schema":"https://design-tokens.github.io/community-group/format/",
+  "$description":"Compact industrial typography based on a Major Third scale.",
+  "fontFamily":{"sans":{"$type":"fontFamily","$value":["Arial Narrow","Roboto Condensed","Segoe UI","Arial","sans-serif"],"$description":"Single compact UI family"}},
+  "fontSize":{
+    "xs":{"$type":"dimension","$value":"12px","$description":"Micro label"},
+    "sm":{"$type":"dimension","$value":"14px","$description":"Small copy"},
+    "base":{"$type":"dimension","$value":"16px","$description":"Body copy"},
+    "lg":{"$type":"dimension","$value":"18px","$description":"Lead copy"},
+    "xl":{"$type":"dimension","$value":"20px","$description":"Small heading"},
+    "2xl":{"$type":"dimension","$value":"24px","$description":"Card heading"},
+    "3xl":{"$type":"dimension","$value":"30px","$description":"Subsection heading"},
+    "4xl":{"$type":"dimension","$value":"36px","$description":"Section heading"},
+    "5xl":{"$type":"dimension","$value":"48px","$description":"Page heading"},
+    "6xl":{"$type":"dimension","$value":"60px","$description":"Desktop display"},
+    "7xl":{"$type":"dimension","$value":"72px","$description":"Wide desktop display"}
+  },
+  "weight":{"regular":{"$type":"number","$value":400,"$description":"Body"},"medium":{"$type":"number","$value":500,"$description":"Controls"},"semibold":{"$type":"number","$value":600,"$description":"Navigation"},"bold":{"$type":"number","$value":700,"$description":"Headings"}}
+}
