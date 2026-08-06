@@ -29,6 +29,11 @@ function static_demo_routes(): array
 function static_demo_transform_html(string $html): string
 {
     $html = str_replace('action="/submit.php"', 'action="#demo-form"', $html);
+    $html = preg_replace(
+        '~^[ \t]*<input\b(?=[^>\r\n]*\bname="(?:csrf_token|started_at)")[^>\r\n]*>\R?~mi',
+        '',
+        $html
+    ) ?? $html;
 
     if (!str_contains($html, '/assets/js/demo-mode.js')) {
         $script = '  <script src="/assets/js/demo-mode.js" defer></script>' . PHP_EOL;

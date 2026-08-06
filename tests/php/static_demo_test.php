@@ -32,11 +32,16 @@ test('static demo transforms forms without changing source templates', function 
         return;
     }
 
-    $html = '<form action="/submit.php" data-lead-form></form></body>';
+    $html = '<form action="/submit.php" data-lead-form>' . PHP_EOL
+        . '  <input type="hidden" name="csrf_token" value="random-token">' . PHP_EOL
+        . '  <input type="hidden" name="started_at" value="1786043070">' . PHP_EOL
+        . '</form></body>';
     $result = static_demo_transform_html($html);
     truthy(str_contains($result, 'action="#demo-form"'));
     truthy(str_contains($result, '/assets/js/demo-mode.js'));
     truthy(!str_contains($result, 'action="/submit.php"'));
+    truthy(!str_contains($result, 'name="csrf_token"'));
+    truthy(!str_contains($result, 'name="started_at"'));
     same($result, static_demo_transform_html($result));
 });
 
