@@ -51,3 +51,48 @@ test('static demo validator reports a missing output directory', function (): vo
     same(1, count($errors));
     truthy(str_contains($errors[0], 'does not exist'));
 });
+
+test('static demo exporter builds an isolated deployable tree', function (): void {
+    truthy(function_exists('static_demo_export'));
+    truthy(function_exists('static_demo_remove_tree'));
+    if (!function_exists('static_demo_export') || !function_exists('static_demo_remove_tree')) {
+        return;
+    }
+
+    $root = dirname(__DIR__, 2);
+    $output = $root . '/.tmp/test-vercel-demo';
+    static_demo_remove_tree($root, $output);
+
+    try {
+        $report = static_demo_export($root, $output);
+        same(36, $report['pages']);
+        same([], $report['errors']);
+        truthy($report['assets'] > 0);
+        truthy(is_file($output . '/index.html'));
+        truthy(is_file($output . '/product/pc-11v/index.html'));
+        truthy(is_file($output . '/assets/css/main.css'));
+        truthy(is_file($output . '/assets/js/demo-mode.js'));
+        truthy(is_file($output . '/vercel.json'));
+        truthy(!is_file($output . '/index.php'));
+    } finally {
+        static_demo_remove_tree($root, $output);
+    }
+});
+
+test('static demo removal rejects unsafe targets', function (): void {
+    truthy(function_exists('static_demo_remove_tree'));
+    if (!function_exists('static_demo_remove_tree')) {
+        return;
+    }
+
+    $root = dirname(__DIR__, 2);
+    foreach ([$root, dirname($root) . '/vercel-demo', $root . '/.tmp/not-a-demo'] as $target) {
+        $rejected = false;
+        try {
+            static_demo_remove_tree($root, $target);
+        } catch (RuntimeException) {
+            $rejected = true;
+        }
+        truthy($rejected);
+    }
+});
