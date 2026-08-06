@@ -12,7 +12,8 @@
 
 - The original PHP site in the repository root remains the single source of truth.
 - `vercel-demo/` is generated output and must never be edited by hand.
-- Export `/`, all 5 category routes, all 26 product routes, `/documents/`, `/privacy/`, `/sitemap.xml`, `/robots.txt`, and `/404.html`.
+- Remove the empty `zapchasti` category from the canonical PHP catalog; `/catalog/zapchasti/` must resolve to 404.
+- Export `/`, all 4 current category routes, all 26 product routes, `/documents/`, `/privacy/`, `/sitemap.xml`, `/robots.txt`, and `/404.html`.
 - Copy only public assets and `favicon.ico`; never copy PHP source, config, data, templates, tests, tools, or credentials.
 - The demo must not send form submissions or pretend that a request was delivered.
 - Future changes are made in the PHP source first, followed by `php scripts/export-vercel-demo.php`.
@@ -20,7 +21,57 @@
 
 ---
 
-### Task 1: Define the static export contract
+### Task 1: Remove the empty spare-parts category
+
+**Files:**
+- Modify: `data/catalog.php`
+- Modify: `tests/php/catalog_test.php`
+- Modify: `tests/php/router_seo_test.php`
+
+**Interfaces:**
+- Consumes: `catalog_categories()`, `find_category()`, `resolve_route()`, and sitemap generation.
+- Produces: a four-category canonical catalog with no `zapchasti` route.
+
+- [ ] **Step 1: Write failing catalog and routing tests**
+
+Add assertions:
+
+```php
+test('empty spare-parts category is not public', function (): void {
+    same(4, count(catalog_categories()));
+    same(null, find_category('zapchasti'));
+    same('not-found', resolve_route('/catalog/zapchasti/')['name']);
+});
+```
+
+Extend the sitemap test to assert that `/catalog/zapchasti/` is absent.
+
+- [ ] **Step 2: Run the PHP suite and verify RED**
+
+Run: `php tests/php/run.php`
+
+Expected: FAIL because the category is still present and resolves as a category.
+
+- [ ] **Step 3: Remove only the empty category definition**
+
+Delete the `zapchasti` entry from the `categories` array in `data/catalog.php`. Do not remove the shared category image asset because generated and historical pages may still reference it until the static export is rebuilt.
+
+- [ ] **Step 4: Run the PHP suite and verify GREEN**
+
+Run: `php tests/php/run.php`
+
+Expected: all tests pass; the home catalog and navigation now receive four categories from the same canonical data source.
+
+- [ ] **Step 5: Commit the category removal**
+
+```powershell
+git add -- data/catalog.php tests/php/catalog_test.php tests/php/router_seo_test.php
+git commit -m "feat: remove empty spare-parts category"
+```
+
+---
+
+### Task 2: Define the static export contract
 
 **Files:**
 - Create: `src/static-demo.php`
@@ -37,13 +88,14 @@ Add tests that require `src/static-demo.php` and assert the exact contract:
 ```php
 test('static demo enumerates every public route', function (): void {
     $routes = static_demo_routes();
-    same(37, count($routes));
+    same(36, count($routes));
     same('index.html', $routes['/']);
     same('catalog/zagruzchiki-suhih-kormov/index.html', $routes['/catalog/zagruzchiki-suhih-kormov/']);
     same('product/pc-11v/index.html', $routes['/product/pc-11v/']);
     same('404.html', $routes['/404.html']);
     same('sitemap.xml', $routes['/sitemap.xml']);
     same('robots.txt', $routes['/robots.txt']);
+    truthy(!isset($routes['/catalog/zapchasti/']));
 });
 
 test('static demo transforms forms without changing the source templates', function (): void {
@@ -119,7 +171,7 @@ git commit -m "test: define static demo export contract"
 
 ---
 
-### Task 2: Implement isolated rendering and export
+### Task 3: Implement isolated rendering and export
 
 **Files:**
 - Create: `scripts/render-static-route.php`
@@ -144,7 +196,7 @@ test('static demo exporter builds an isolated deployable tree', function (): voi
 
     try {
         $report = static_demo_export($root, $output);
-        same(37, $report['pages']);
+        same(36, $report['pages']);
         same([], $report['errors']);
         truthy(is_file($output . '/index.html'));
         truthy(is_file($output . '/product/pc-11v/index.html'));
@@ -199,7 +251,7 @@ function static_demo_export(string $projectRoot, string $outputRoot): array
 `static_demo_export()` must:
 
 1. clear the validated output directory;
-2. render all 37 routes through `scripts/render-static-route.php`;
+2. render all 36 routes through `scripts/render-static-route.php`;
 3. transform only `.html` outputs;
 4. copy `assets/` and `favicon.ico`;
 5. copy the two demo templates;
@@ -231,7 +283,7 @@ Create `scripts/static-demo/vercel.json` with `trailingSlash: true`, security he
 
 - [ ] **Step 6: Add the CLI wrapper**
 
-`scripts/export-vercel-demo.php` must require `bootstrap.php` and `src/static-demo.php`, default output to `<project>/vercel-demo`, print `Exported 37 pages and N assets`, print each validation error to STDERR, and return exit code `1` on errors.
+`scripts/export-vercel-demo.php` must require `bootstrap.php` and `src/static-demo.php`, default output to `<project>/vercel-demo`, print `Exported 36 pages and N assets`, print each validation error to STDERR, and return exit code `1` on errors.
 
 - [ ] **Step 7: Run the PHP suite and verify GREEN**
 
@@ -248,7 +300,7 @@ git commit -m "feat: add static Vercel demo exporter"
 
 ---
 
-### Task 3: Generate and validate the tracked Vercel demo
+### Task 4: Generate and validate the tracked Vercel demo
 
 **Files:**
 - Create: `vercel-demo/**`
@@ -280,7 +332,7 @@ Expected: FAIL because `vercel-demo/` does not exist yet.
 
 Run: `php scripts/export-vercel-demo.php`
 
-Expected: `Exported 37 pages and 58 assets`, followed by `Validation passed.`
+Expected: `Exported 36 pages and 58 assets`, followed by `Validation passed.`
 
 - [ ] **Step 4: Run static output validation and the full test suite**
 
@@ -316,7 +368,7 @@ git commit -m "build: generate Vercel client demo"
 
 ---
 
-### Task 4: Document publishing and deliver the GitHub update
+### Task 5: Document publishing and deliver the GitHub update
 
 **Files:**
 - Modify: `README.md`
