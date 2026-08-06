@@ -96,3 +96,8 @@ test('static demo removal rejects unsafe targets', function (): void {
         truthy($rejected);
     }
 });
+
+test('tracked Vercel demo matches the public route contract', function (): void {
+    $output = dirname(__DIR__, 2) . '/vercel-demo';
+    same([], static_demo_validate_output($output, static_demo_routes()));
+});

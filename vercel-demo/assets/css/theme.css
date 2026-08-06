@@ -1,0 +1,127 @@
+@font-face {
+  font-family: "Onest Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/onest-cyrillic-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Onest Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/onest-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --color-action-primary: #c52d23;
+  --color-action-primary-hover: #a8251d;
+  --color-action-primary-active: #8e201a;
+  --color-accent-wash: rgb(197 45 35 / 18%);
+  --color-action-secondary: #fffdfa;
+  --color-text-primary: #202523;
+  --color-text-secondary: #4f5a56;
+  --color-text-tertiary: #65706c;
+  --color-text-on-action: #fffdfa;
+  --color-text-on-dark: #f8f5ef;
+  --color-text-on-dark-muted: #dedbd3;
+  --color-text-link: #9e221a;
+  --color-surface-page: #f5f3ef;
+  --color-surface-card: #fffdfa;
+  --color-surface-sunken: #ebe8e1;
+  --color-surface-tint: #e7e3da;
+  --color-surface-sage: #e3e7e1;
+  --color-surface-glass: rgb(255 253 250 / 90%);
+  --color-header-glass: rgb(245 243 239 / 92%);
+  --color-glass-border: rgb(255 253 250 / 72%);
+  --color-surface-dark: #25302d;
+  --color-surface-dark-raised: #323d39;
+  --color-footer-bg: #211d17;
+  --color-footer-raised: #2f291f;
+  --color-footer-text: #fff8e9;
+  --color-footer-muted: #d9cfb7;
+  --color-footer-accent: #e7cb83;
+  --color-footer-accent-hover: #fff3cf;
+  --color-border-default: #dedbd3;
+  --color-border-strong: #7c8782;
+  --color-border-focus: #c52d23;
+  --color-feedback-success: #2d704d;
+  --color-feedback-error: #9e221a;
+  --color-overlay: rgb(32 37 35 / 64%);
+  --hero-overlay: linear-gradient(90deg, rgb(245 243 239 / 38%) 0%, rgb(245 243 239 / 14%) 48%, rgb(37 48 45 / 10%) 100%);
+  --page-hero-overlay: linear-gradient(90deg, rgb(37 48 45 / 94%) 0%, rgb(37 48 45 / 78%) 46%, rgb(37 48 45 / 34%) 100%);
+  --font-sans: "Onest Variable", "Segoe UI", Arial, sans-serif;
+  --font-size-xs: .75rem;
+  --font-size-sm: .875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-section: clamp(var(--space-16), 8vw, var(--space-24));
+  --radius-sm: .75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 1.75rem;
+  --radius-full: 9999px;
+  --border-thin: .0625rem;
+  --control-sm: 2.5rem;
+  --control-md: 3.25rem;
+  --control-lg: 3.5rem;
+  --icon-sm: 1rem;
+  --icon-md: 1.25rem;
+  --icon-lg: 1.5rem;
+  --container: 80rem;
+  --measure: 65ch;
+  --shadow-raised: 0 1.5rem 4rem rgb(32 37 35 / 10%);
+  --shadow-card: 0 .75rem 2.5rem rgb(32 37 35 / 4%);
+  --shadow-action: 0 .75rem 1.75rem rgb(142 32 26 / 18%);
+  --shadow-dialog: 0 2rem 6rem rgb(32 37 35 / 22%);
+  --focus-ring: 0 0 0 .125rem var(--color-surface-card), 0 0 0 .3125rem var(--color-border-focus);
+  --duration-fast: 120ms;
+  --duration-base: 220ms;
+  --duration-moderate: 320ms;
+  --duration-reduced-motion: .01ms;
+  --ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --z-header: 30;
+  --z-cookie: 90;
+  --z-drawer: 100;
+  --z-modal: 110;
+  --scrollbar-compensation: 0rem;
+}
+
+[data-theme="dark"] {
+  --color-text-primary: #f8f5ef;
+  --color-text-secondary: #dedbd3;
+  --color-text-tertiary: #a8b0ac;
+  --color-text-link: #f2a39b;
+  --color-surface-page: #202523;
+  --color-surface-card: #25302d;
+  --color-surface-sunken: #323d39;
+  --color-border-default: #4f5a56;
+  --color-border-strong: #a8b0ac;
+  --color-action-primary: #c52d23;
+}

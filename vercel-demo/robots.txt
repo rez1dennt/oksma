@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /config/
+Disallow: /data/
+Disallow: /src/
+Sitemap: https://oksma-demo.vercel.app/sitemap.xml
