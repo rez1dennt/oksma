@@ -104,6 +104,7 @@
   --z-cookie: 90;
   --z-drawer: 100;
   --z-modal: 110;
+  --scrollbar-compensation: 0rem;
 }
 
 [data-theme="dark"] {
