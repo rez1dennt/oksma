@@ -28,7 +28,7 @@
         ['shield', 'Гарантия качества', 'Сопровождаем технику после поставки'],
         ['phone', 'Инженерная консультация', 'Помогаем выбрать рабочее решение'],
     ] as [$iconName, $title, $text]): ?>
-      <article class="benefit-item"><?= icon($iconName) ?><div><h2><?= e($title) ?></h2><p><?= e($text) ?></p></div></article>
+      <article class="benefit-item"><span class="benefit-item__icon"><?= icon($iconName) ?></span><div><h2><?= e($title) ?></h2><p><?= e($text) ?></p></div></article>
     <?php endforeach; ?>
   </div>
 </section>
@@ -67,22 +67,26 @@
 </section>
 
 <section class="request-section" id="request">
-  <div class="container request-section__grid">
-    <div class="request-section__copy">
-      <p class="eyebrow">Если готовой модели недостаточно</p>
-      <h2>Почему выбирают ОКСМА</h2>
-      <p>Разберём задачу, предложим несколько вариантов и подготовим технику к вашим условиям эксплуатации.</p>
-      <ul class="check-list">
-        <li><?= icon('check') ?>Работаем с техническим заданием</li>
-        <li><?= icon('check') ?>Согласовываем комплектацию до производства</li>
-        <li><?= icon('check') ?>Организуем доставку в регионы России</li>
-        <li><?= icon('check') ?>Остаёмся на связи после поставки</li>
-      </ul>
-    </div>
-    <div class="request-section__form">
-      <p class="eyebrow">Получить предложение</p>
-      <h2>Расскажите, какая техника нужна</h2>
-      <?= render_partial('lead-form', ['formId' => 'home-lead']) ?>
+  <div class="container">
+    <div class="request-section__panel">
+      <div class="request-section__grid">
+        <div class="request-section__copy">
+          <p class="eyebrow">Если готовой модели недостаточно</p>
+          <h2>Почему выбирают ОКСМА</h2>
+          <p>Разберём задачу, предложим несколько вариантов и подготовим технику к вашим условиям эксплуатации.</p>
+          <ul class="check-list">
+            <li><?= icon('check') ?>Работаем с техническим заданием</li>
+            <li><?= icon('check') ?>Согласовываем комплектацию до производства</li>
+            <li><?= icon('check') ?>Организуем доставку в регионы России</li>
+            <li><?= icon('check') ?>Остаёмся на связи после поставки</li>
+          </ul>
+        </div>
+        <div class="request-section__form">
+          <p class="eyebrow">Получить предложение</p>
+          <h2>Расскажите, какая техника нужна</h2>
+          <?= render_partial('lead-form', ['formId' => 'home-lead']) ?>
+        </div>
+      </div>
     </div>
   </div>
 </section>

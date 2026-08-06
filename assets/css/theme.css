@@ -35,6 +35,8 @@
   --color-surface-tint: #e7e3da;
   --color-surface-sage: #e3e7e1;
   --color-surface-glass: rgb(255 253 250 / 90%);
+  --color-header-glass: rgb(245 243 239 / 92%);
+  --color-glass-border: rgb(255 253 250 / 72%);
   --color-surface-dark: #25302d;
   --color-surface-dark-raised: #323d39;
   --color-border-default: #dedbd3;
@@ -43,6 +45,8 @@
   --color-feedback-success: #2d704d;
   --color-feedback-error: #9e221a;
   --color-overlay: rgb(32 37 35 / 64%);
+  --hero-overlay: linear-gradient(90deg, rgb(245 243 239 / 38%) 0%, rgb(245 243 239 / 14%) 48%, rgb(37 48 45 / 10%) 100%);
+  --page-hero-overlay: linear-gradient(90deg, rgb(37 48 45 / 94%) 0%, rgb(37 48 45 / 78%) 46%, rgb(37 48 45 / 34%) 100%);
   --font-sans: "Onest Variable", "Segoe UI", Arial, sans-serif;
   --font-size-xs: .75rem;
   --font-size-sm: .875rem;
@@ -79,7 +83,7 @@
   --radius-full: 9999px;
   --border-thin: .0625rem;
   --control-sm: 2.5rem;
-  --control-md: 3rem;
+  --control-md: 3.25rem;
   --control-lg: 3.5rem;
   --icon-sm: 1rem;
   --icon-md: 1.25rem;
@@ -87,6 +91,8 @@
   --container: 80rem;
   --measure: 65ch;
   --shadow-raised: 0 1.5rem 4rem rgb(32 37 35 / 10%);
+  --shadow-card: 0 .75rem 2.5rem rgb(32 37 35 / 4%);
+  --shadow-action: 0 .75rem 1.75rem rgb(142 32 26 / 18%);
   --shadow-dialog: 0 2rem 6rem rgb(32 37 35 / 22%);
   --focus-ring: 0 0 0 .125rem var(--color-surface-card), 0 0 0 .3125rem var(--color-border-focus);
   --duration-fast: 120ms;

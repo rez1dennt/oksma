@@ -36,6 +36,8 @@ test('home contains all required first-stage sections', function (): void {
     truthy(str_contains($html, 'class="hero__content hero__content--glass"'));
     truthy(str_contains($html, 'class="hero__chip"'));
     truthy(strpos($html, 'class="hero__media"') < strpos($html, 'class="container hero__grid"'));
+    truthy(str_contains($html, 'class="request-section__panel"'));
+    same(4, substr_count($html, 'class="benefit-item__icon"'));
 });
 
 test('category renders every product and both view controls', function (): void {
@@ -83,6 +85,7 @@ test('product renders gallery tabs specifications and related items', function (
     truthy(str_contains($html, 'role="tablist"'));
     truthy(str_contains($html, 'Объём бункера'));
     truthy(str_contains($html, 'Похожие модели'));
+    same(count($product['benefits']), substr_count($html, 'class="product-benefit__icon"'));
 });
 
 test('privacy publishes approved operator details and contact', function (): void {
