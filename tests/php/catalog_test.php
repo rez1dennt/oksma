@@ -25,6 +25,11 @@ test('catalog has valid unique relationships', function (): void {
     same('ЗСК-10', find_product('zsk-10')['name']);
 });
 
+test('empty spare-parts category is not public', function (): void {
+    same(4, count(catalog_categories()));
+    same(null, find_category('zapchasti'));
+});
+
 test('related products ignore missing and current entries', function (): void {
     truthy(function_exists('find_product'));
     if (!function_exists('find_product')) {

@@ -73,8 +73,13 @@ test('sitemap contains only valid indexable routes', function (): void {
     $urls = sitemap_urls();
     truthy(in_array('https://example.ru/product/zsk-10/', $urls, true));
     truthy(in_array('https://example.ru/privacy/', $urls, true));
+    truthy(!in_array('https://example.ru/catalog/zapchasti/', $urls, true));
     truthy(!in_array('https://example.ru/404/', $urls, true));
     same(count($urls), count(array_unique($urls)));
+});
+
+test('removed spare-parts category route is not found', function (): void {
+    same('not-found', resolve_route('/catalog/zapchasti/')['name']);
 });
 
 test('documents page is indexable canonical and present in sitemap', function (): void {
