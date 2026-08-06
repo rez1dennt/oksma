@@ -29,6 +29,14 @@ function find_product(string $slug): ?array
     return catalog_products()[$slug] ?? null;
 }
 
+function products_for_category(string $categorySlug): array
+{
+    return array_values(array_filter(
+        catalog_products(),
+        static fn (array $product): bool => $product['category'] === $categorySlug
+    ));
+}
+
 function related_products(array $product): array
 {
     $currentSlug = $product['slug'] ?? '';
