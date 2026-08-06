@@ -15,6 +15,9 @@
 - Catalog content lives in one PHP data file and is edited together with the client later.
 - Preserve the references' industrial meaning, but use independent copy, composition details, and generated/local imagery.
 - Do not include the LionTrade logo, name, customer logos, or branded machine markings.
+- Use the supplied horizontal «ОКСМА» wordmark as the primary logo; create transparent dark and light web variants. Keep the circular welder illustration as an unused reserve asset in this phase.
+- Public contacts are `oksmaprom@yandex.ru`, `+7 937 435-17-00`, `+7 937 435-27-00`, and `+7 937 445-67-21`.
+- Privacy operator data is ООО «СпецТехПром», ИНН 5258079050, КПП 525801001, ОГРН 1085258005469, legal address 603064, Нижегородская область, г. Нижний Новгород, ул. Новикова-Прибоя, д. 6А, к. 3.
 - Forms send to email through SMTP; secrets never enter Git or browser output.
 - Pages must support clean URLs, responsive layouts, keyboard access, reduced motion, and technical SEO.
 - Implement behavior test-first and run fresh verification before every completion claim.
@@ -187,7 +190,7 @@ function catalog_integrity_errors(): array {
 }
 ```
 
-Add `composer.json` with PHP `>=8.1` and `phpmailer/phpmailer:^7.0`, `config/app.php` with the temporary site name `ПромТехника`, local base URL, phone, and email labels, and `.gitignore` entries for `/vendor/`, `/config/mail.php`, `/storage/*.log`, and `.env`.
+Add `composer.json` with PHP `>=8.1` and `phpmailer/phpmailer:^7.0`. Add `config/app.php` with brand name `ОКСМА`, legal entity `ООО «СпецТехПром»`, `oksmaprom@yandex.ru`, primary phone `+7 937 435-17-00`, two additional phones, the approved requisites, and an environment-overridable base URL. Add `.gitignore` entries for `/vendor/`, `/tools/composer.phar`, `/config/mail.php`, `/storage/*.log`, and `.env`.
 
 - [ ] **Step 4: Run the catalog tests and verify green**
 
@@ -765,6 +768,8 @@ git commit -m "feat: add secure SMTP lead delivery"
 - Create: `assets/images/product-zsk-10-2.webp`
 - Create: `assets/images/product-zsk-7-1.webp`
 - Create: `assets/images/client-mark-01.svg` through `client-mark-05.svg`
+- Create: `assets/images/logo-oksma-dark.webp`
+- Create: `assets/images/logo-oksma-light.webp`
 - Modify: `data/catalog.php`
 - Modify: `templates/pages/home.php`
 
@@ -794,7 +799,7 @@ Use the `imagegen` skill to create a photorealistic, brand-neutral red dry-feed 
 
 - [ ] **Step 3: Create supporting assets and web variants**
 
-Use the `imagemagick-conversion` workflow to auto-orient, strip metadata, resize, and encode the hero and demonstration product crops as WebP. Target approximately 1920×1100 for the hero, 1200×900 for product images, and visually lossless quality at a practical web file size. Create five abstract monochrome SVG client marks that cannot be mistaken for real companies.
+Use the `imagemagick-conversion` workflow to auto-orient, strip metadata, resize, and encode the hero and demonstration product crops as WebP. Target approximately 1920×1100 for the hero, 1200×900 for product images, and visually lossless quality at a practical web file size. Prepare the supplied horizontal «ОКСМА» wordmark as tightly cropped transparent dark and light WebP variants and verify edge quality at header size. Create five abstract monochrome SVG client marks that cannot be mistaken for real companies.
 
 - [ ] **Step 4: Run asset tests and inspect the images**
 
@@ -823,7 +828,7 @@ git commit -m "feat: add original industrial imagery"
 
 - [ ] **Step 1: Write deployment instructions with exact hosting actions**
 
-Document PHP 8.1+ selection, upload destination, Apache rewrite requirement, `composer install --no-dev --classmap-authoritative` before packaging, creation of `config/mail.php`, SMTP fields, base domain change, writable `storage` directory, HTTPS redirect, test-email procedure, and the files/content that the client will replace later.
+Document PHP 8.1+ selection, upload destination, Apache rewrite requirement, `composer install --no-dev --classmap-authoritative` before packaging, creation of `config/mail.php` with `oksmaprom@yandex.ru` as recipient, SMTP fields, base domain change, writable `storage` directory, HTTPS redirect, test-email procedure, and the files/content that the client will replace later.
 
 - [ ] **Step 2: Run the full automated suite**
 
