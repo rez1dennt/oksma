@@ -2,7 +2,7 @@
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
       <a class="brand brand--light" href="/" aria-label="ОКСМА, на главную">
-        <img src="/assets/images/logo-oksma-light.webp" width="164" height="46" alt="ОКСМА">
+        <img src="/assets/images/logo-oksma-light.webp" width="164" height="29" alt="ОКСМА">
       </a>
       <p>Производим и поставляем технику для хозяйств и предприятий. Подбираем комплектацию под рабочие условия.</p>
     </div>

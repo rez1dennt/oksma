@@ -42,7 +42,7 @@
     <div class="category-grid">
       <?php foreach (array_values($categories) as $index => $category): ?>
         <article class="category-card<?= $index === 0 ? ' category-card--featured' : '' ?>">
-          <img src="<?= e($category['image']) ?>" width="900" height="620" loading="lazy" alt="<?= e($category['name']) ?>">
+          <img src="<?= e($category['image']) ?>" width="900" height="675" loading="lazy" alt="<?= e($category['name']) ?>">
           <div class="category-card__content">
             <p class="category-card__number"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></p>
             <h3><?= e($category['name']) ?></h3>

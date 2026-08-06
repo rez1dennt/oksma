@@ -2,7 +2,7 @@
 <header class="site-header" data-header>
   <div class="container site-header__inner">
     <a class="brand" href="/" aria-label="ОКСМА, на главную">
-      <img src="/assets/images/logo-oksma-dark.webp" width="164" height="46" alt="ОКСМА">
+      <img src="/assets/images/logo-oksma-dark.webp" width="164" height="29" alt="ОКСМА">
     </a>
     <nav class="desktop-nav" aria-label="Основная навигация">
       <ul>
