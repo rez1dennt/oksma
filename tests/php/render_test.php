@@ -84,3 +84,12 @@ test('long responsive headings can wrap without clipping', function (): void {
 
     truthy((bool) preg_match('/\.page-hero h1, \.legal-hero h1\s*\{[^}]*overflow-wrap:\s*anywhere;/s', $css));
 });
+
+test('document cards define responsive and print-safe presentation', function (): void {
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+    foreach (['.documents-hero', '.document-grid', '.document-card', '.document-card__status', '.document-card__actions'] as $selector) {
+        truthy(str_contains($css, $selector));
+    }
+    truthy((bool) preg_match('/@media \(min-width: 48em\).*?\.document-grid\s*\{[^}]*grid-template-columns:/s', $css));
+    truthy((bool) preg_match('/@media print.*?\.document-card__actions/s', $css));
+});
