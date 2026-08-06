@@ -37,3 +37,10 @@ test('backspace can clear the remaining country prefix', () => {
     caret: 0,
   });
 });
+
+test('delete removes the next digit across an opening parenthesis and keeps the caret', () => {
+  assert.deepEqual(deleteRussianPhoneDigit('+7 (243) 5', 3, 'forward'), {
+    value: '+7 (435)',
+    caret: 3,
+  });
+});

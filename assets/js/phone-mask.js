@@ -37,7 +37,10 @@ export function deleteRussianPhoneDigit(value, caret, direction = 'backward') {
   if (index < 0 || index >= text.length || index <= 1) return { value: '', caret: 0 };
 
   const formatted = formatRussianPhone(text.slice(0, index) + text.slice(index + 1));
-  return { value: formatted, caret: formatted.length };
+  return {
+    value: formatted,
+    caret: direction === 'forward' ? Math.min(offset, formatted.length) : formatted.length,
+  };
 }
 
 export function isCompleteRussianPhone(value) {
