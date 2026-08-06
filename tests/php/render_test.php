@@ -65,6 +65,17 @@ test('renderer escapes partial data by default helper', function (): void {
     truthy(str_contains(icon('phone'), 'aria-hidden="true"'));
 });
 
+test('renderer exposes the complete consistent svg icon set', function (): void {
+    foreach (['arrow-right', 'check', 'close', 'mail', 'menu', 'phone', 'grid', 'list', 'printer', 'shield', 'truck', 'wrench'] as $name) {
+        $svg = icon($name);
+        truthy(str_contains($svg, 'viewBox="0 0 24 24"'));
+        truthy(str_contains($svg, 'stroke="currentColor"'));
+        truthy(str_contains($svg, 'stroke-width="2"'));
+        truthy(str_contains($svg, 'aria-hidden="true"'));
+    }
+    truthy(str_contains(icon('shield'), 'm9 12 2 2 4-4'));
+});
+
 test('token files are valid DTCG JSON and theme exposes semantic variables', function (): void {
     $root = dirname(__DIR__, 2);
     foreach (glob($root . '/tokens/*.json') as $file) {
