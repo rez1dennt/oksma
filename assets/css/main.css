@@ -1,7 +1,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: var(--space-20); scrollbar-gutter: stable; }
 body { margin: 0; min-width: 20rem; color: var(--color-text-primary); background: var(--color-surface-page); font-family: var(--font-sans); font-size: var(--font-size-base); line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
-body.is-locked { overflow: hidden; padding-inline-end: var(--scrollbar-compensation, 0); }
+body.is-locked { position: fixed; inset-block-start: var(--scroll-lock-y, 0); inset-inline-start: var(--scroll-lock-x, 0); inline-size: 100%; overflow: hidden; padding-inline-end: var(--scrollbar-compensation, 0); }
 @supports (scrollbar-gutter: stable) { body.is-locked { padding-inline-end: 0; } }
 img, svg { display: block; }
 img { max-width: 100%; height: auto; }

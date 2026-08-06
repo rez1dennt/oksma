@@ -1,26 +1,12 @@
 import { deleteRussianPhoneDigit, formatRussianPhone, isCompleteRussianPhone } from './phone-mask.js';
 import { readCatalogView, saveCatalogView } from './catalog-view.js';
 import { hasConsent, saveConsent } from './consent.js';
-import { scrollbarCompensation, transitionTimeout } from './overlay-motion.js';
+import { transitionTimeout } from './overlay-motion.js';
+import { createScrollLock } from './scroll-lock.js';
 
 const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-let pageLockCount = 0;
-
-function lockPage() {
-  if (pageLockCount === 0) {
-    const compensation = scrollbarCompensation(window.innerWidth, document.documentElement.clientWidth);
-    document.documentElement.style.setProperty('--scrollbar-compensation', `${compensation}px`);
-    document.body.classList.add('is-locked');
-  }
-  pageLockCount += 1;
-}
-
-function unlockPage() {
-  pageLockCount = Math.max(0, pageLockCount - 1);
-  if (pageLockCount !== 0) return;
-  document.body.classList.remove('is-locked');
-  document.documentElement.style.removeProperty('--scrollbar-compensation');
-}
+const pageScrollLock = createScrollLock(window, document.documentElement, document.body);
+const focusWithoutScroll = (element) => element?.focus?.({ preventScroll: true });
 
 function trapFocus(container, event) {
   if (event.key !== 'Tab') return;
@@ -65,10 +51,10 @@ function setupMenu() {
     state = 'closed';
     setPageInert(false, menu);
     if (menuLocked) {
-      unlockPage();
+      pageScrollLock.unlock();
       menuLocked = false;
     }
-    if (restoreFocus) toggle.focus();
+    if (restoreFocus) focusWithoutScroll(toggle);
   };
   const open = () => {
     if (state === 'open' || state === 'opening') return;
@@ -77,7 +63,7 @@ function setupMenu() {
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Закрыть меню');
     if (!menuLocked) {
-      lockPage();
+      pageScrollLock.lock();
       menuLocked = true;
     }
     setPageInert(true, menu);
@@ -85,7 +71,7 @@ function setupMenu() {
       if (state !== 'opening') return;
       menu.classList.add('is-open');
       state = 'open';
-      (closeButton ?? panel ?? menu).focus();
+      focusWithoutScroll(closeButton ?? panel ?? menu);
     });
   };
 
@@ -109,16 +95,16 @@ function setupModal() {
 
   const close = () => {
     modal.hidden = true;
-    unlockPage();
+    pageScrollLock.unlock();
     setPageInert(false, modal);
-    returnFocus?.focus();
+    focusWithoutScroll(returnFocus);
   };
   const open = (trigger) => {
     returnFocus = trigger;
     modal.hidden = false;
-    lockPage();
+    pageScrollLock.lock();
     setPageInert(true, modal);
-    dialog?.focus();
+    focusWithoutScroll(dialog);
   };
 
   document.querySelectorAll('[data-modal-open]').forEach((button) => button.addEventListener('click', () => open(button)));
