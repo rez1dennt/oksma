@@ -47,6 +47,9 @@ test('layout renders the shared accessible shell', function (): void {
     truthy(str_contains($html, 'data-cookie-notice'));
     truthy(str_contains($html, 'logo-oksma-dark.webp'));
     truthy(str_contains($html, '+7 937 435-17-00'));
+    $headerClose = strpos($html, '</header>');
+    $mobileDrawer = strpos($html, 'class="mobile-menu"');
+    truthy($headerClose !== false && $mobileDrawer !== false && $headerClose < $mobileDrawer);
 });
 
 test('renderer escapes partial data by default helper', function (): void {
@@ -72,4 +75,10 @@ test('token files are valid DTCG JSON and theme exposes semantic variables', fun
     truthy(str_contains($theme, '--color-action-primary'));
     truthy(str_contains($theme, '--space-section'));
     truthy(str_contains($theme, '--focus-ring'));
+});
+
+test('long responsive headings can wrap without clipping', function (): void {
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+
+    truthy((bool) preg_match('/\.page-hero h1, \.legal-hero h1\s*\{[^}]*overflow-wrap:\s*anywhere;/s', $css));
 });
