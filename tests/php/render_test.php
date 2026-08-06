@@ -113,3 +113,15 @@ test('document cards define responsive and print-safe presentation', function ()
     truthy((bool) preg_match('/@media \(min-width: 48em\).*?\.document-grid\s*\{[^}]*grid-template-columns:/s', $css));
     truthy((bool) preg_match('/@media print.*?\.document-card__actions/s', $css));
 });
+
+test('product benefits use isolated cards and responsive columns', function (): void {
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+
+    truthy((bool) preg_match('/\.product-benefits\s*\{[^}]*background:\s*var\(--color-surface-page\)/s', $css));
+    truthy((bool) preg_match('/\.product-benefits\s*\{[^}]*padding-block:\s*0\s+var\(--space-12\)/s', $css));
+    truthy((bool) preg_match('/\.product-benefits__list\s*\{[^}]*grid-template-columns:\s*1fr/s', $css));
+    truthy((bool) preg_match('/\.product-benefit-card\s*\{[^}]*background:\s*var\(--color-surface-card\)/s', $css));
+    truthy((bool) preg_match('/\.product-benefit-card__index\s*\{[^}]*color:\s*color-mix\(in srgb, var\(--color-footer-accent\) 45%, var\(--color-text-primary\)\)/s', $css));
+    truthy((bool) preg_match('/@media \(min-width: 48em\).*?\.product-benefits__list\s*\{[^}]*repeat\(3,/s', $css));
+    truthy((bool) preg_match('/@media print.*?\.product-benefits/s', $css));
+});
