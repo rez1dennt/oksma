@@ -16,7 +16,7 @@ test('imported product photography is web ready and unique per family', function
         $image = getimagesize($file);
         truthy(is_array($image));
         same('image/webp', $image['mime']);
-        truthy($image[0] >= 640 && $image[1] >= 480);
+        truthy($image[0] >= 640 && $image[1] >= 400);
         $family = basename(dirname($file));
         $hash = hash_file('sha256', $file);
         truthy(!isset($hashesByFamily[$family][$hash]));

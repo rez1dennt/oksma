@@ -47,6 +47,59 @@ test('approved brand assets exist and are valid webp images', function () use ($
     }
 });
 
+test('catalog category photography keeps distinct full-size source frames', function () use ($root): void {
+    $hashes = [];
+
+    foreach (catalog_categories() as $category) {
+        $file = $root . str_replace('/', DIRECTORY_SEPARATOR, $category['image']);
+        $image = getimagesize($file);
+        truthy(is_array($image));
+        truthy($image[0] >= 800 && $image[1] >= 600);
+
+        $hash = hash_file('sha256', $file);
+        truthy(!isset($hashes[$hash]));
+        $hashes[$hash] = true;
+    }
+});
+
+test('requested replacement product photography uses distinct source frames', function () use ($root): void {
+    $paths = [
+        '/assets/images/products/lowbed/lowbed-trailer-1.webp',
+        '/assets/images/products/pgts/pgts-12-1.webp',
+        '/assets/images/products/pgts/pgts-3-1.webp',
+        '/assets/images/products/pgts/pgts-6-5-1.webp',
+        '/assets/images/products/ppts/ppts-12-1.webp',
+        '/assets/images/products/ppts/ppts-20-1.webp',
+        '/assets/images/products/zsk/zsk-10-1.webp',
+        '/assets/images/products/zsk/zsk-7-1.webp',
+        '/assets/images/products/pc/pc-2-1.webp',
+        '/assets/images/product-zsk-12-1.webp',
+        '/assets/images/product-zsk-20-1.webp',
+        '/assets/images/product-zsk-21-1.webp',
+        '/assets/images/product-pzk-15-1.webp',
+    ];
+    $hashes = [];
+
+    foreach ($paths as $path) {
+        $file = $root . str_replace('/', DIRECTORY_SEPARATOR, $path);
+        $image = getimagesize($file);
+        truthy(is_array($image));
+        truthy($image[0] >= 800 && $image[1] >= 450);
+        $hash = hash_file('sha256', $file);
+        truthy(!isset($hashes[$hash]));
+        $hashes[$hash] = true;
+    }
+});
+
+test('catalog cards and product galleries show complete source frames', function () use ($root): void {
+    $css = (string) file_get_contents($root . '/assets/css/main.css');
+
+    truthy((bool) preg_match('/\.product-card__media img\s*\{[^}]*object-fit:\s*contain/s', $css));
+    truthy((bool) preg_match('/\.gallery__stage img\s*\{[^}]*object-fit:\s*contain/s', $css));
+    truthy((bool) preg_match('/\.gallery__thumbs img\s*\{[^}]*object-fit:\s*contain/s', $css));
+    truthy(!str_contains($css, '.product-card:hover .product-card__media img { transform: scale'));
+});
+
 test('site exposes an explicit favicon', function () use ($root): void {
     truthy(is_file($root . '/favicon.ico'));
     $layout = (string) file_get_contents($root . '/templates/layout.php');
