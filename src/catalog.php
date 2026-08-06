@@ -56,6 +56,36 @@ function related_products(array $product): array
     return $related;
 }
 
+function product_benefit_cards(array $benefits): array
+{
+    return array_map(
+        static function (string $title, int $index): array {
+            $icon = 'truck';
+            $description = 'Конструкция и рабочие функции подобраны для ежедневной эксплуатации.';
+
+            if (preg_match('/изготов|комплект|шасси|задач/ui', $title)) {
+                $icon = 'wrench';
+                $description = 'Исполнение и оснащение согласуем под ваши условия работы.';
+            } elseif (preg_match('/гарант|сервис|сопровожд|поддерж/ui', $title)) {
+                $icon = 'shield';
+                $description = 'Остаёмся на связи и сопровождаем технику после поставки.';
+            } elseif (preg_match('/достав/ui', $title)) {
+                $icon = 'truck';
+                $description = 'Организуем отправку готовой техники в любой регион России.';
+            }
+
+            return [
+                'index' => sprintf('%02d', $index + 1),
+                'title' => $title,
+                'description' => $description,
+                'icon' => $icon,
+            ];
+        },
+        array_values($benefits),
+        array_keys(array_values($benefits))
+    );
+}
+
 function catalog_integrity_errors(): array
 {
     $errors = [];
@@ -73,6 +103,14 @@ function catalog_integrity_errors(): array
 
         if (find_category((string) ($product['category'] ?? '')) === null) {
             $errors[] = "Product {$key} has an unknown category";
+        }
+
+        $benefits = array_values(array_filter(
+            $product['benefits'] ?? [],
+            static fn (mixed $benefit): bool => is_string($benefit) && trim($benefit) !== ''
+        ));
+        if (count($benefits) !== 3 || count(array_unique($benefits)) !== 3) {
+            $errors[] = "Product {$key} must expose exactly three unique benefits";
         }
 
         foreach ($product['related'] ?? [] as $relatedSlug) {

@@ -54,3 +54,24 @@ test('commercial proposal archive publishes all verified models', function (): v
         truthy(($product['images'] ?? []) !== [], "Missing image for {$slug}");
     }
 });
+
+test('every product exposes exactly three benefits', function (): void {
+    foreach (catalog_products() as $product) {
+        same(3, count($product['benefits'] ?? []));
+        same(3, count(array_unique($product['benefits'] ?? [])));
+    }
+});
+
+test('benefit cards map copy to the shared icon system', function (): void {
+    $cards = product_benefit_cards([
+        'Самозагрузка и перемешивание',
+        'Комплектация под задачу',
+        'Доставка по России',
+    ]);
+
+    same(['01', '02', '03'], array_column($cards, 'index'));
+    same(['truck', 'wrench', 'truck'], array_column($cards, 'icon'));
+    same('Самозагрузка и перемешивание', $cards[0]['title']);
+    truthy(str_contains($cards[1]['description'], 'условия работы'));
+    truthy(str_contains($cards[2]['description'], 'регион России'));
+});
