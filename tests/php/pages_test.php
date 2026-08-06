@@ -32,6 +32,10 @@ test('home contains all required first-stage sections', function (): void {
     foreach (['Техника для', 'Каталог техники', 'Почему выбирают ОКСМА', 'Нам доверяют', 'Получить предложение'] as $label) {
         truthy(str_contains($html, $label));
     }
+    truthy(str_contains($html, 'class="hero__media"'));
+    truthy(str_contains($html, 'class="hero__content hero__content--glass"'));
+    truthy(str_contains($html, 'class="hero__chip"'));
+    truthy(strpos($html, 'class="hero__media"') < strpos($html, 'class="container hero__grid"'));
 });
 
 test('category renders every product and both view controls', function (): void {
@@ -54,6 +58,8 @@ test('category renders every product and both view controls', function (): void 
     truthy(str_contains($html, 'data-view="grid"'));
     truthy(str_contains($html, 'data-view="list"'));
     truthy(str_contains($html, 'data-catalog'));
+    truthy(str_contains($html, 'class="page-hero__media"'));
+    truthy(str_contains($html, e($category['image'])));
 });
 
 test('product renders gallery tabs specifications and related items', function (): void {

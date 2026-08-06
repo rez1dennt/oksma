@@ -51,6 +51,7 @@
       "tertiary":{"$type":"color","$value":"{primitive.neutral.600}","$description":"Incidental text"},
       "on-action":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Text on red actions"},
       "on-dark":{"$type":"color","$value":"{primitive.offWhite}","$description":"Text on graphite"},
+      "on-dark-muted":{"$type":"color","$value":"{primitive.neutral.300}","$description":"Supporting text on graphite"},
       "link":{"$type":"color","$value":"{primitive.red.700}","$description":"Inline links"},
       "link-hover":{"$type":"color","$value":"{primitive.red.900}","$description":"Inline link hover"}
     },

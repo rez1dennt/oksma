@@ -1,6 +1,9 @@
 <section class="hero">
+  <div class="hero__media">
+    <img src="/assets/images/hero-industrial-loader.webp" width="1920" height="1100" fetchpriority="high" alt="Красный загрузчик сухих кормов на промышленной площадке">
+  </div>
   <div class="container hero__grid">
-    <div class="hero__content">
+    <div class="hero__content hero__content--glass">
       <p class="eyebrow">Производство и поставка по России</p>
       <h1>Техника для точной работы и больших задач</h1>
       <p class="hero__lead">Производим загрузчики сухих кормов, прицепную технику и оборудование. Подбираем исполнение под маршруты, шасси и условия вашего предприятия.</p>
@@ -13,10 +16,7 @@
         <div><dt>Под задачу</dt><dd>комплектация и изготовление</dd></div>
       </dl>
     </div>
-    <div class="hero__media">
-      <img src="/assets/images/hero-industrial-loader.webp" width="1920" height="1100" fetchpriority="high" alt="Красный загрузчик сухих кормов на промышленной площадке">
-      <div class="hero__plate"><span>ОКСМА</span><strong>Техника, готовая к работе</strong></div>
-    </div>
+    <div class="hero__chip"><span>ОКСМА</span><strong>Техника, готовая к работе</strong></div>
   </div>
 </section>
 

@@ -1,4 +1,7 @@
 <section class="page-hero">
+  <div class="page-hero__media" aria-hidden="true">
+    <img src="<?= e($category['image']) ?>" width="900" height="675" alt="">
+  </div>
   <div class="container page-hero__inner">
     <?= render_partial('breadcrumbs', ['items' => $breadcrumbs ?? [
         ['name' => 'Главная', 'url' => '/'],
