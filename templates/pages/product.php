@@ -38,13 +38,7 @@
   </div>
 </section>
 
-<section class="product-benefits">
-  <div class="container product-benefits__grid">
-    <?php foreach ($product['benefits'] as $index => $benefit): ?>
-      <div><span class="product-benefit__icon"><?= icon(['truck', 'wrench', 'shield', 'phone'][$index % 4]) ?></span><span><?= e($benefit) ?></span></div>
-    <?php endforeach; ?>
-  </div>
-</section>
+<?= render_partial('product-benefits', ['benefits' => $product['benefits']]) ?>
 
 <section class="section product-details">
   <div class="container">

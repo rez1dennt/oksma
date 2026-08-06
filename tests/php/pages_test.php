@@ -88,7 +88,12 @@ test('product renders gallery tabs specifications and related items', function (
     truthy(str_contains($html, 'role="tablist"'));
     truthy(str_contains($html, 'Вместимость бункера'));
     truthy(str_contains($html, 'Похожие модели'));
-    same(count($product['benefits']), substr_count($html, 'class="product-benefit__icon"'));
+    same(3, substr_count($html, 'class="product-benefit-card"'));
+    truthy(str_contains($html, 'id="product-benefits-title"'));
+    truthy(str_contains($html, 'class="product-benefits__list"'));
+    truthy(str_contains($html, 'class="product-benefit-card__index" aria-hidden="true">01</span>'));
+    truthy(str_contains($html, 'Ключевые преимущества'));
+    truthy(str_contains($html, 'Исполнение и оснащение согласуем под ваши условия работы.'));
 });
 
 test('product documents tab is conditional and uses the shared declaration data', function (): void {
