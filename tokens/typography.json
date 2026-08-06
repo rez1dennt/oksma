@@ -1,7 +1,7 @@
 {
   "$schema":"https://design-tokens.github.io/community-group/format/",
-  "$description":"Compact industrial typography based on a Major Third scale.",
-  "fontFamily":{"sans":{"$type":"fontFamily","$value":["Arial Narrow","Roboto Condensed","Segoe UI","Arial","sans-serif"],"$description":"Single compact UI family"}},
+  "$description":"Modern industrial-editorial typography based on self-hosted Onest Variable.",
+  "fontFamily":{"sans":{"$type":"fontFamily","$value":["Onest Variable","Segoe UI","Arial","sans-serif"],"$description":"Wide, readable variable UI family with Cyrillic support"}},
   "fontSize":{
     "xs":{"$type":"dimension","$value":"12px","$description":"Micro label"},
     "sm":{"$type":"dimension","$value":"14px","$description":"Small copy"},

@@ -1,68 +1,74 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "ОКСМА industrial palette with a restrained red action color and warm graphite neutrals.",
+  "$description": "ОКСМА soft industrial-editorial palette with milk surfaces, green graphite and one restrained red action color.",
   "primitive": {
-    "$description": "Raw palette values derived as perceptually ordered ramps.",
+    "$description": "Raw palette values ordered for accessible semantic use.",
     "red": {
-      "50": {"$type":"color","$value":"#fef3f2","$description":"Lightest red surface"},
-      "100":{"$type":"color","$value":"#fee4e2","$description":"Light red surface"},
-      "200":{"$type":"color","$value":"#fecdca","$description":"Soft red border"},
-      "300":{"$type":"color","$value":"#fda29b","$description":"Muted red accent"},
-      "400":{"$type":"color","$value":"#f97066","$description":"Bright red accent"},
-      "500":{"$type":"color","$value":"#c92a20","$description":"Accessible red on white"},
-      "600":{"$type":"color","$value":"#b42318","$description":"Primary action red"},
-      "700":{"$type":"color","$value":"#912018","$description":"Primary hover red"},
-      "800":{"$type":"color","$value":"#781f17","$description":"Primary active red"},
-      "900":{"$type":"color","$value":"#601a15","$description":"Deep red"},
-      "950":{"$type":"color","$value":"#340c09","$description":"Darkest red"}
+      "50": {"$type":"color","$value":"#fff2f0","$description":"Lightest red surface"},
+      "100":{"$type":"color","$value":"#fbe1de","$description":"Light red surface"},
+      "200":{"$type":"color","$value":"#f2b8b2","$description":"Soft red border"},
+      "300":{"$type":"color","$value":"#e9877e","$description":"Muted red accent"},
+      "400":{"$type":"color","$value":"#d85044","$description":"Bright red accent"},
+      "500":{"$type":"color","$value":"#c52d23","$description":"Primary action red"},
+      "600":{"$type":"color","$value":"#a8251d","$description":"Primary hover red"},
+      "700":{"$type":"color","$value":"#9e221a","$description":"Accessible inline link"},
+      "800":{"$type":"color","$value":"#8e201a","$description":"Primary active red"},
+      "900":{"$type":"color","$value":"#741b16","$description":"Deep red"},
+      "950":{"$type":"color","$value":"#3c0d0a","$description":"Darkest red"}
     },
     "neutral": {
-      "50":{"$type":"color","$value":"#fafaf8","$description":"Warm page white"},
-      "100":{"$type":"color","$value":"#f4f4f1","$description":"Warm subtle surface"},
-      "200":{"$type":"color","$value":"#e5e5df","$description":"Decorative border"},
-      "300":{"$type":"color","$value":"#d1d1c9","$description":"Strong light border"},
-      "400":{"$type":"color","$value":"#9b9b93","$description":"Tertiary text"},
-      "500":{"$type":"color","$value":"#6d6d66","$description":"Secondary text"},
-      "600":{"$type":"color","$value":"#50504b","$description":"Strong secondary text"},
-      "700":{"$type":"color","$value":"#373734","$description":"Raised dark surface"},
-      "800":{"$type":"color","$value":"#252524","$description":"Dark surface"},
-      "900":{"$type":"color","$value":"#181817","$description":"Primary ink"},
-      "950":{"$type":"color","$value":"#0d0d0c","$description":"Deep graphite"}
+      "50":{"$type":"color","$value":"#fffdfa","$description":"Warm card white"},
+      "100":{"$type":"color","$value":"#f5f3ef","$description":"Milk page canvas"},
+      "200":{"$type":"color","$value":"#ebe8e1","$description":"Warm inset surface"},
+      "300":{"$type":"color","$value":"#dedbd3","$description":"Decorative hairline border"},
+      "400":{"$type":"color","$value":"#a8b0ac","$description":"Muted graphite"},
+      "500":{"$type":"color","$value":"#7c8782","$description":"Essential control border"},
+      "600":{"$type":"color","$value":"#65706c","$description":"Tertiary text"},
+      "700":{"$type":"color","$value":"#4f5a56","$description":"Secondary text"},
+      "800":{"$type":"color","$value":"#323d39","$description":"Raised graphite surface"},
+      "900":{"$type":"color","$value":"#25302d","$description":"Deep green graphite"},
+      "950":{"$type":"color","$value":"#202523","$description":"Primary ink"}
     },
-    "white":{"$type":"color","$value":"#ffffff","$description":"Absolute white for text on action"},
-    "green":{"$type":"color","$value":"#237a45","$description":"Success green"}
+    "surface": {
+      "sand":{"$type":"color","$value":"#e7e3da","$description":"Warm request section"},
+      "sage":{"$type":"color","$value":"#e3e7e1","$description":"Soft industrial accent surface"}
+    },
+    "offWhite":{"$type":"color","$value":"#f8f5ef","$description":"Warm text on graphite"},
+    "green":{"$type":"color","$value":"#2d704d","$description":"Success green"}
   },
   "semantic": {
     "$description":"Purpose-based light theme tokens.",
     "action": {
-      "primary":{"$type":"color","$value":"{primitive.red.600}","$description":"Primary conversion action"},
-      "primary-hover":{"$type":"color","$value":"{primitive.red.700}","$description":"Primary hover"},
+      "primary":{"$type":"color","$value":"{primitive.red.500}","$description":"Primary conversion action"},
+      "primary-hover":{"$type":"color","$value":"{primitive.red.600}","$description":"Primary hover"},
       "primary-active":{"$type":"color","$value":"{primitive.red.800}","$description":"Primary pressed"},
       "secondary":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Neutral secondary action"},
-      "secondary-hover":{"$type":"color","$value":"{primitive.neutral.100}","$description":"Secondary hover"}
+      "secondary-hover":{"$type":"color","$value":"{primitive.neutral.200}","$description":"Secondary hover"}
     },
     "text": {
-      "primary":{"$type":"color","$value":"{primitive.neutral.900}","$description":"Primary page text"},
-      "secondary":{"$type":"color","$value":"{primitive.neutral.600}","$description":"Supporting page text"},
-      "tertiary":{"$type":"color","$value":"{primitive.neutral.500}","$description":"Incidental text"},
-      "on-action":{"$type":"color","$value":"{primitive.white}","$description":"Text on red actions"},
-      "on-dark":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Text on graphite"},
+      "primary":{"$type":"color","$value":"{primitive.neutral.950}","$description":"Primary page text"},
+      "secondary":{"$type":"color","$value":"{primitive.neutral.700}","$description":"Supporting page text"},
+      "tertiary":{"$type":"color","$value":"{primitive.neutral.600}","$description":"Incidental text"},
+      "on-action":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Text on red actions"},
+      "on-dark":{"$type":"color","$value":"{primitive.offWhite}","$description":"Text on graphite"},
       "link":{"$type":"color","$value":"{primitive.red.700}","$description":"Inline links"},
       "link-hover":{"$type":"color","$value":"{primitive.red.900}","$description":"Inline link hover"}
     },
     "surface": {
-      "page":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Page canvas"},
-      "card":{"$type":"color","$value":"{primitive.white}","$description":"Card surface"},
-      "raised":{"$type":"color","$value":"{primitive.white}","$description":"Raised surface"},
-      "sunken":{"$type":"color","$value":"{primitive.neutral.100}","$description":"Inset surface"},
-      "dark":{"$type":"color","$value":"{primitive.neutral.950}","$description":"Cinematic section"},
-      "dark-raised":{"$type":"color","$value":"{primitive.neutral.800}","$description":"Raised dark section"}
+      "page":{"$type":"color","$value":"{primitive.neutral.100}","$description":"Page canvas"},
+      "card":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Card surface"},
+      "raised":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Raised surface"},
+      "sunken":{"$type":"color","$value":"{primitive.neutral.200}","$description":"Inset surface"},
+      "tint":{"$type":"color","$value":"{primitive.surface.sand}","$description":"Warm section surface"},
+      "sage":{"$type":"color","$value":"{primitive.surface.sage}","$description":"Soft green industrial surface"},
+      "dark":{"$type":"color","$value":"{primitive.neutral.900}","$description":"Graphite section"},
+      "dark-raised":{"$type":"color","$value":"{primitive.neutral.800}","$description":"Raised graphite section"}
     },
     "border": {
-      "default":{"$type":"color","$value":"{primitive.neutral.200}","$description":"Decorative border"},
+      "default":{"$type":"color","$value":"{primitive.neutral.300}","$description":"Decorative border"},
       "strong":{"$type":"color","$value":"{primitive.neutral.500}","$description":"Essential control border"},
-      "focus":{"$type":"color","$value":"{primitive.red.600}","$description":"Keyboard focus"},
-      "error":{"$type":"color","$value":"{primitive.red.600}","$description":"Invalid field border"}
+      "focus":{"$type":"color","$value":"{primitive.red.500}","$description":"Keyboard focus"},
+      "error":{"$type":"color","$value":"{primitive.red.700}","$description":"Invalid field border"}
     },
     "feedback": {
       "success":{"$type":"color","$value":"{primitive.green}","$description":"Success text and icon"},
@@ -87,12 +93,12 @@
   "dark": {
     "$description":"Semantic overrides for a dark document theme.",
     "text": {
-      "primary":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Primary dark-theme text"},
+      "primary":{"$type":"color","$value":"{primitive.offWhite}","$description":"Primary dark-theme text"},
       "secondary":{"$type":"color","$value":"{primitive.neutral.300}","$description":"Secondary dark-theme text"},
       "tertiary":{"$type":"color","$value":"{primitive.neutral.400}","$description":"Tertiary dark-theme text"},
-      "on-action":{"$type":"color","$value":"{primitive.white}","$description":"Action label in dark theme"},
-      "link":{"$type":"color","$value":"{primitive.red.300}","$description":"Dark-theme links"},
-      "link-hover":{"$type":"color","$value":"{primitive.red.200}","$description":"Dark-theme link hover"}
+      "on-action":{"$type":"color","$value":"{primitive.neutral.50}","$description":"Action label in dark theme"},
+      "link":{"$type":"color","$value":"{primitive.red.200}","$description":"Dark-theme links"},
+      "link-hover":{"$type":"color","$value":"{primitive.red.100}","$description":"Dark-theme link hover"}
     },
     "surface": {
       "page":{"$type":"color","$value":"{primitive.neutral.950}","$description":"Dark page canvas"},

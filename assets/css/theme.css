@@ -1,27 +1,48 @@
+@font-face {
+  font-family: "Onest Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/onest-cyrillic-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Onest Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../fonts/onest-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
-  --color-action-primary: #b42318;
-  --color-action-primary-hover: #912018;
-  --color-action-primary-active: #781f17;
-  --color-accent-wash: rgb(180 35 24 / 24%);
-  --color-action-secondary: #fafaf8;
-  --color-text-primary: #181817;
-  --color-text-secondary: #50504b;
-  --color-text-tertiary: #6d6d66;
-  --color-text-on-action: #ffffff;
-  --color-text-on-dark: #fafaf8;
-  --color-text-link: #912018;
-  --color-surface-page: #fafaf8;
-  --color-surface-card: #ffffff;
-  --color-surface-sunken: #f4f4f1;
-  --color-surface-dark: #0d0d0c;
-  --color-surface-dark-raised: #252524;
-  --color-border-default: #e5e5df;
-  --color-border-strong: #6d6d66;
-  --color-border-focus: #b42318;
-  --color-feedback-success: #237a45;
-  --color-feedback-error: #912018;
-  --color-overlay: rgb(13 13 12 / 78%);
-  --font-sans: "Arial Narrow", "Roboto Condensed", "Segoe UI", Arial, sans-serif;
+  --color-action-primary: #c52d23;
+  --color-action-primary-hover: #a8251d;
+  --color-action-primary-active: #8e201a;
+  --color-accent-wash: rgb(197 45 35 / 18%);
+  --color-action-secondary: #fffdfa;
+  --color-text-primary: #202523;
+  --color-text-secondary: #4f5a56;
+  --color-text-tertiary: #65706c;
+  --color-text-on-action: #fffdfa;
+  --color-text-on-dark: #f8f5ef;
+  --color-text-link: #9e221a;
+  --color-surface-page: #f5f3ef;
+  --color-surface-card: #fffdfa;
+  --color-surface-sunken: #ebe8e1;
+  --color-surface-tint: #e7e3da;
+  --color-surface-sage: #e3e7e1;
+  --color-surface-glass: rgb(255 253 250 / 90%);
+  --color-surface-dark: #25302d;
+  --color-surface-dark-raised: #323d39;
+  --color-border-default: #dedbd3;
+  --color-border-strong: #7c8782;
+  --color-border-focus: #c52d23;
+  --color-feedback-success: #2d704d;
+  --color-feedback-error: #9e221a;
+  --color-overlay: rgb(32 37 35 / 64%);
+  --font-sans: "Onest Variable", "Segoe UI", Arial, sans-serif;
   --font-size-xs: .75rem;
   --font-size-sm: .875rem;
   --font-size-base: 1rem;
@@ -50,9 +71,10 @@
   --space-20: 5rem;
   --space-24: 6rem;
   --space-section: clamp(var(--space-16), 8vw, var(--space-24));
-  --radius-sm: .125rem;
-  --radius-md: .375rem;
-  --radius-lg: .75rem;
+  --radius-sm: .75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 1.75rem;
   --radius-full: 9999px;
   --border-thin: .0625rem;
   --control-sm: 2.5rem;
@@ -63,8 +85,8 @@
   --icon-lg: 1.5rem;
   --container: 80rem;
   --measure: 65ch;
-  --shadow-raised: 0 1.25rem 3.75rem rgb(13 13 12 / 12%);
-  --shadow-dialog: 0 2rem 6rem rgb(13 13 12 / 28%);
+  --shadow-raised: 0 1.5rem 4rem rgb(32 37 35 / 10%);
+  --shadow-dialog: 0 2rem 6rem rgb(32 37 35 / 22%);
   --focus-ring: 0 0 0 .125rem var(--color-surface-card), 0 0 0 .3125rem var(--color-border-focus);
   --duration-fast: 120ms;
   --duration-base: 220ms;
@@ -78,14 +100,14 @@
 }
 
 [data-theme="dark"] {
-  --color-text-primary: #fafaf8;
-  --color-text-secondary: #d1d1c9;
-  --color-text-tertiary: #9b9b93;
-  --color-text-link: #fda29b;
-  --color-surface-page: #0d0d0c;
-  --color-surface-card: #181817;
-  --color-surface-sunken: #252524;
-  --color-border-default: #373734;
-  --color-border-strong: #9b9b93;
-  --color-action-primary: #c92a20;
+  --color-text-primary: #f8f5ef;
+  --color-text-secondary: #dedbd3;
+  --color-text-tertiary: #a8b0ac;
+  --color-text-link: #f2a39b;
+  --color-surface-page: #202523;
+  --color-surface-card: #25302d;
+  --color-surface-sunken: #323d39;
+  --color-border-default: #4f5a56;
+  --color-border-strong: #a8b0ac;
+  --color-action-primary: #c52d23;
 }
