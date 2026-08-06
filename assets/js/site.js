@@ -1,8 +1,26 @@
 import { formatRussianPhone, isCompleteRussianPhone } from './phone-mask.js';
 import { readCatalogView, saveCatalogView } from './catalog-view.js';
 import { hasConsent, saveConsent } from './consent.js';
+import { scrollbarCompensation, transitionTimeout } from './overlay-motion.js';
 
 const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+let pageLockCount = 0;
+
+function lockPage() {
+  if (pageLockCount === 0) {
+    const compensation = scrollbarCompensation(window.innerWidth, document.documentElement.clientWidth);
+    document.documentElement.style.setProperty('--scrollbar-compensation', `${compensation}px`);
+    document.body.classList.add('is-locked');
+  }
+  pageLockCount += 1;
+}
+
+function unlockPage() {
+  pageLockCount = Math.max(0, pageLockCount - 1);
+  if (pageLockCount !== 0) return;
+  document.body.classList.remove('is-locked');
+  document.documentElement.style.removeProperty('--scrollbar-compensation');
+}
 
 function trapFocus(container, event) {
   if (event.key !== 'Tab') return;
@@ -31,28 +49,51 @@ function setupMenu() {
   const menu = document.querySelector('[data-mobile-menu]');
   if (!toggle || !menu) return;
   const closeButton = menu.querySelector('[data-menu-close]');
+  const panel = menu.querySelector('.mobile-menu__panel');
+  let state = 'closed';
+  let menuLocked = false;
 
-  const close = () => {
-    menu.hidden = true;
+  const close = async ({ restoreFocus = true } = {}) => {
+    if (state === 'closed' || state === 'closing') return;
+    state = 'closing';
+    menu.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'Открыть меню');
-    document.body.classList.remove('is-locked');
+    await transitionTimeout(panel, 360);
+    if (state !== 'closing') return;
+    menu.hidden = true;
+    state = 'closed';
     setPageInert(false, menu);
-    toggle.focus();
+    if (menuLocked) {
+      unlockPage();
+      menuLocked = false;
+    }
+    if (restoreFocus) toggle.focus();
   };
   const open = () => {
+    if (state === 'open' || state === 'opening') return;
+    state = 'opening';
     menu.hidden = false;
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Закрыть меню');
-    document.body.classList.add('is-locked');
+    if (!menuLocked) {
+      lockPage();
+      menuLocked = true;
+    }
     setPageInert(true, menu);
-    (closeButton ?? menu).focus();
+    requestAnimationFrame(() => {
+      if (state !== 'opening') return;
+      menu.classList.add('is-open');
+      state = 'open';
+      (closeButton ?? panel ?? menu).focus();
+    });
   };
 
-  toggle.addEventListener('click', () => menu.hidden ? open() : close());
-  closeButton?.addEventListener('click', close);
+  toggle.addEventListener('click', () => state === 'closed' || state === 'closing' ? open() : close());
+  closeButton?.addEventListener('click', () => close());
   menu.addEventListener('click', (event) => {
-    if (event.target === menu || event.target.closest('a')) close();
+    if (event.target === menu) close();
+    else if (event.target.closest('a')) close({ restoreFocus: false });
   });
   menu.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') close();
@@ -68,14 +109,14 @@ function setupModal() {
 
   const close = () => {
     modal.hidden = true;
-    document.body.classList.remove('is-locked');
+    unlockPage();
     setPageInert(false, modal);
     returnFocus?.focus();
   };
   const open = (trigger) => {
     returnFocus = trigger;
     modal.hidden = false;
-    document.body.classList.add('is-locked');
+    lockPage();
     setPageInert(true, modal);
     dialog?.focus();
   };
