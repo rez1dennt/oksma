@@ -36,7 +36,7 @@ p { max-width: var(--measure); }
 .icon-button { width: var(--control-md); height: var(--control-md); display: inline-grid; place-items: center; border: 0; color: inherit; background: transparent; cursor: pointer; }
 .eyebrow { margin-block-end: var(--space-4); color: var(--color-action-primary); font-size: var(--font-size-xs); font-weight: var(--weight-bold); letter-spacing: .12em; text-transform: uppercase; }
 
-.site-header { position: sticky; inset-block-start: 0; z-index: var(--z-header); background: rgb(250 250 248 / 94%); border-block-end: var(--border-thin) solid var(--color-border-default); backdrop-filter: blur(var(--space-2)); }
+.site-header { position: sticky; inset-block-start: 0; z-index: var(--z-header); background: var(--color-surface-page); border-block-end: var(--border-thin) solid var(--color-border-default); }
 .site-header__inner { min-height: var(--space-20); display: flex; align-items: center; gap: var(--space-6); }
 .brand { flex: 0 0 auto; display: inline-flex; align-items: center; }
 .brand img { width: 10.25rem; height: auto; }
@@ -103,6 +103,7 @@ p { max-width: var(--measure); }
 .hero { position: relative; overflow: clip; background: var(--color-surface-page); }
 .hero__grid { min-height: calc(100vh - var(--space-20)); display: grid; align-items: center; gap: var(--space-8); padding-block: var(--space-12); }
 .hero__content { position: relative; z-index: 1; }
+.hero h1 { font-size: clamp(var(--font-size-4xl), 5vw, var(--font-size-6xl)); }
 .hero__lead { max-width: 42rem; color: var(--color-text-secondary); font-size: var(--font-size-lg); }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block: var(--space-8); }
 .hero__facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding-block-start: var(--space-6); border-block-start: var(--border-thin) solid var(--color-border-default); }
@@ -240,9 +241,10 @@ p { max-width: var(--measure); }
 }
 
 @media (min-width: 64em) {
-  .hero__grid { grid-template-columns: minmax(28rem, .78fr) minmax(34rem, 1.22fr); gap: 0; padding-block: 0; }
+  .hero__grid { min-height: min(calc(100vh - var(--space-20)), 45rem); grid-template-columns: minmax(28rem, .78fr) minmax(34rem, 1.22fr); gap: 0; padding-block: 0; }
   .hero__content { padding-block: var(--space-20); padding-inline-end: var(--space-10); }
   .hero__media { margin-inline-end: calc((100vw - min(100vw - var(--space-8), var(--container))) / -2); }
+  .hero__media > img { object-position: 62% center; }
   .benefit-band__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .category-grid { grid-template-columns: 1.15fr .85fr .85fr; grid-auto-rows: minmax(22rem, auto); }
   .category-card { min-height: 22rem; }

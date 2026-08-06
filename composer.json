@@ -1,6 +1,7 @@
 {
   "name": "oksma/industrial-catalog",
   "description": "Многостраничный каталог промышленной техники ОКСМА",
+  "license": "proprietary",
   "type": "project",
   "require": {
     "php": ">=8.1",

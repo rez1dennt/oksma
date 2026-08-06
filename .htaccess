@@ -1,7 +1,8 @@
 Options -Indexes
+DirectoryIndex index.php
 RewriteEngine On
 
-RewriteRule ^(?:config|data|src|templates|tests|storage|tools)(?:/|$) - [F,L,NC]
+RewriteRule ^(?:config|data|docs|scripts|src|storage|templates|tests|tokens|tools|vendor)(?:/|$) - [F,L,NC]
 RewriteRule ^catalog/([a-z0-9-]+)/?$ catalog.php?slug=$1 [QSA,L,NC]
 RewriteRule ^product/([a-z0-9-]+)/?$ product.php?slug=$1 [QSA,L,NC]
 RewriteRule ^privacy/?$ privacy.php [L,NC]
