@@ -25,6 +25,21 @@ export function formatRussianPhone(value) {
   return formatted;
 }
 
+export function deleteRussianPhoneDigit(value, caret, direction = 'backward') {
+  const text = String(value ?? '');
+  const offset = Math.max(0, Math.min(Number(caret) || 0, text.length));
+  const adjacent = direction === 'forward' ? text[offset] : text[offset - 1];
+  if (adjacent === undefined || /\d/.test(adjacent)) return null;
+
+  let index = direction === 'forward' ? offset : offset - 1;
+  const step = direction === 'forward' ? 1 : -1;
+  while (index >= 0 && index < text.length && !/\d/.test(text[index])) index += step;
+  if (index < 0 || index >= text.length || index <= 1) return { value: '', caret: 0 };
+
+  const formatted = formatRussianPhone(text.slice(0, index) + text.slice(index + 1));
+  return { value: formatted, caret: formatted.length };
+}
+
 export function isCompleteRussianPhone(value) {
   return normalizeRussianPhone(value).length === 11;
 }

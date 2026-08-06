@@ -1,4 +1,4 @@
-import { formatRussianPhone, isCompleteRussianPhone } from './phone-mask.js';
+import { deleteRussianPhoneDigit, formatRussianPhone, isCompleteRussianPhone } from './phone-mask.js';
 import { readCatalogView, saveCatalogView } from './catalog-view.js';
 import { hasConsent, saveConsent } from './consent.js';
 import { scrollbarCompensation, transitionTimeout } from './overlay-motion.js';
@@ -131,6 +131,20 @@ function setupModal() {
 
 function setupPhoneMasks() {
   document.querySelectorAll('[data-phone]').forEach((input) => {
+    input.addEventListener('keydown', (event) => {
+      if ((event.key !== 'Backspace' && event.key !== 'Delete') || input.selectionStart !== input.selectionEnd) return;
+      const edit = deleteRussianPhoneDigit(
+        input.value,
+        input.selectionStart ?? input.value.length,
+        event.key === 'Delete' ? 'forward' : 'backward',
+      );
+      if (!edit) return;
+      event.preventDefault();
+      input.value = edit.value;
+      input.setSelectionRange(edit.caret, edit.caret);
+      input.setCustomValidity('');
+      input.removeAttribute('aria-invalid');
+    });
     input.addEventListener('input', () => {
       input.value = formatRussianPhone(input.value);
       input.setSelectionRange(input.value.length, input.value.length);
