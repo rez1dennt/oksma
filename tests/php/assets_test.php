@@ -47,6 +47,13 @@ test('approved brand assets exist and are valid webp images', function () use ($
     }
 });
 
+test('site exposes an explicit favicon', function () use ($root): void {
+    truthy(is_file($root . '/favicon.ico'));
+    $layout = (string) file_get_contents($root . '/templates/layout.php');
+    truthy(str_contains($layout, 'rel="icon"'));
+    truthy(str_contains($layout, '/favicon.ico'));
+});
+
 test('apache declares the PDF content type', function () use ($root): void {
     $rules = (string) file_get_contents($root . '/.htaccess');
     truthy(str_contains($rules, 'AddType application/pdf .pdf'));

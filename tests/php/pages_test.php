@@ -11,7 +11,7 @@ test('catalog can select products by category', function (): void {
         return;
     }
 
-    same(8, count(products_for_category('zagruzchiki-suhih-kormov')));
+    truthy(count(products_for_category('zagruzchiki-suhih-kormov')) >= 9);
     same([], products_for_category('unknown'));
 });
 
@@ -58,7 +58,7 @@ test('category renders every product and both view controls', function (): void 
         'schemas' => [],
     ]);
 
-    same(8, substr_count($html, 'class="product-card"'));
+    same(count($products), substr_count($html, 'class="product-card"'));
     truthy(str_contains($html, 'data-view="grid"'));
     truthy(str_contains($html, 'data-view="list"'));
     truthy(str_contains($html, 'data-catalog'));
@@ -86,7 +86,7 @@ test('product renders gallery tabs specifications and related items', function (
     same(1, substr_count($html, '<h1'));
     truthy(str_contains($html, 'data-gallery'));
     truthy(str_contains($html, 'role="tablist"'));
-    truthy(str_contains($html, 'Объём бункера'));
+    truthy(str_contains($html, 'Вместимость бункера'));
     truthy(str_contains($html, 'Похожие модели'));
     same(count($product['benefits']), substr_count($html, 'class="product-benefit__icon"'));
 });

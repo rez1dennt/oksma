@@ -36,3 +36,21 @@ test('related products ignore missing and current entries', function (): void {
     truthy(count($related) > 0);
     truthy(!in_array('zsk-10', array_column($related, 'slug'), true));
 });
+
+test('commercial proposal archive publishes all verified models', function (): void {
+    $expected = [
+        'lowbed-trailer',
+        'pc-2', 'pc-5v', 'pc-6', 'pc-11v', 'pc-12v', 'pc-20',
+        'pgts-3', 'pgts-6-5', 'pgts-9', 'pgts-12',
+        'ppts-9', 'ppts-12', 'ppts-15', 'ppts-18', 'ppts-20', 'ppts-20p',
+        'pzk-10',
+        'zsk-7', 'zsk-10', 'zsk-15', 'zsk-15u',
+    ];
+
+    foreach ($expected as $slug) {
+        $product = find_product($slug);
+        truthy($product !== null, "Missing imported product {$slug}");
+        truthy(($product['specs'] ?? []) !== [], "Missing specifications for {$slug}");
+        truthy(($product['images'] ?? []) !== [], "Missing image for {$slug}");
+    }
+});

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-return [
+$catalog = [
     'categories' => [
         'zagruzchiki-suhih-kormov' => [
             'slug' => 'zagruzchiki-suhih-kormov',
@@ -146,3 +146,10 @@ return [
         ],
     ],
 ];
+
+$catalog['products'] = array_replace(
+    $catalog['products'],
+    require __DIR__ . '/imported-products.php'
+);
+
+return $catalog;
