@@ -82,6 +82,7 @@ p { max-width: var(--measure); }
 .consent { display: flex; align-items: flex-start; gap: var(--space-3); color: var(--color-text-secondary); font-size: var(--font-size-sm); }
 .consent input { width: var(--icon-md); height: var(--icon-md); margin-block-start: var(--space-1); accent-color: var(--color-action-primary); }
 .form-status { min-height: 1.5em; font-weight: var(--weight-semibold); }
+.form-status:not(:empty) { padding: var(--space-3) var(--space-4); background: var(--color-surface-sunken); border-inline-start: calc(var(--border-thin) * 3) solid var(--color-action-primary); }
 
 .modal { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; place-items: center; padding: var(--space-4); }
 .modal__backdrop { position: absolute; inset: 0; background: var(--color-overlay); }
@@ -253,6 +254,19 @@ p { max-width: var(--measure); }
   .product-benefits__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .legal-page__grid { grid-template-columns: 17rem minmax(0, 1fr); align-items: start; }
   .legal-toc { position: sticky; inset-block-start: calc(var(--space-20) + var(--space-4)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: var(--duration-reduced-motion) !important; animation-duration: var(--duration-reduced-motion) !important; animation-iteration-count: 1 !important; }
+}
+
+@media print {
+  .site-header, .site-footer, .product-summary__actions, .product-benefits, .related-section, .cookie-notice, .modal, .gallery__thumbs { display: none !important; }
+  body { color: black; background: white; }
+  .product-top, .product-details, .section { padding-block: var(--space-4); }
+  .product-top__grid { grid-template-columns: 1fr 1fr; }
+  a { color: inherit; text-decoration: none; }
 }
 
 @media (min-width: 72em) {

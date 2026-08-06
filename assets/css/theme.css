@@ -69,6 +69,7 @@
   --duration-fast: 120ms;
   --duration-base: 220ms;
   --duration-moderate: 320ms;
+  --duration-reduced-motion: .01ms;
   --ease-standard: cubic-bezier(.2, 0, 0, 1);
   --z-header: 30;
   --z-drawer: 60;
