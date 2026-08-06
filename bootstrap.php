@@ -16,6 +16,7 @@ if (is_file($autoload)) {
 }
 
 require_once __DIR__ . '/src/catalog.php';
+require_once __DIR__ . '/src/documents.php';
 require_once __DIR__ . '/src/router.php';
 require_once __DIR__ . '/src/seo.php';
 require_once __DIR__ . '/src/render.php';
