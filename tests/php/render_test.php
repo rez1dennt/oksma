@@ -148,5 +148,5 @@ test('compact modal form fits normal mobile viewports without clipping', functio
     truthy((bool) preg_match('/\.lead-form--compact \.field-grid\s*\{[^}]*display:\s*contents/s', $css));
     truthy(str_contains($css, '.lead-form--compact .field__error:empty'));
     truthy(str_contains($css, '.lead-form--compact .form-status:empty'));
-    truthy((bool) preg_match('/@media \(max-width: 22em\).*?\.lead-form--compact \.field--phone/s', $css));
+    truthy((bool) preg_match('/@media \(max-width: 22em\).*?\.lead-form--compact\s*\{[^}]*gap:\s*var\(--space-2\)/s', $css));
 });
