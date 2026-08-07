@@ -40,6 +40,8 @@ test('home contains all required first-stage sections', function (): void {
     truthy(str_contains($html, 'partner-stp-2008.webp'));
     same(0, substr_count($html, 'Партнёр 0'));
     same(4, substr_count($html, 'class="benefit-item__icon"'));
+    same(1, substr_count($html, 'class="lead-form"'));
+    same(1, substr_count($html, 'class="lead-form lead-form--compact"'));
 });
 
 test('category renders every product and both view controls', function (): void {
