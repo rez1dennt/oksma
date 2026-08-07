@@ -4,6 +4,12 @@ export function scrollbarCompensation(viewportWidth, clientWidth) {
   return Math.max(0, viewport - client);
 }
 
+export function afterNextPaint(scheduleFrame = requestAnimationFrame) {
+  return new Promise((resolve) => {
+    scheduleFrame(() => scheduleFrame(resolve));
+  });
+}
+
 export function transitionTimeout(element, fallbackMs = 360) {
   return new Promise((resolve) => {
     let settled = false;

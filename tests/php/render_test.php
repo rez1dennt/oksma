@@ -125,3 +125,14 @@ test('product benefits use isolated cards and responsive columns', function (): 
     truthy((bool) preg_match('/@media \(min-width: 48em\).*?\.product-benefits__list\s*\{[^}]*repeat\(3,/s', $css));
     truthy((bool) preg_match('/@media print.*?\.product-benefits/s', $css));
 });
+
+test('mobile overlays define deterministic tokenized motion', function (): void {
+    $theme = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/theme.css');
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+
+    truthy(str_contains($theme, '--ease-enter'));
+    truthy(str_contains($theme, '--ease-exit'));
+    truthy((bool) preg_match('/\.mobile-menu__panel\s*\{[^}]*opacity:\s*0/s', $css));
+    truthy((bool) preg_match('/\.mobile-menu\.is-open \.mobile-menu__panel\s*\{[^}]*opacity:\s*1/s', $css));
+    truthy((bool) preg_match('/@media \(prefers-reduced-motion: reduce\).*?\.mobile-menu__panel\s*\{[^}]*transform:\s*none/s', $css));
+});

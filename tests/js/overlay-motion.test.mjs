@@ -1,6 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { scrollbarCompensation, transitionTimeout } from '../../assets/js/overlay-motion.js';
+import { afterNextPaint, scrollbarCompensation, transitionTimeout } from '../../assets/js/overlay-motion.js';
+
+test('after next paint resolves only after two animation frames', async () => {
+  const callbacks = [];
+  const pending = afterNextPaint((callback) => callbacks.push(callback));
+  let resolved = false;
+  pending.then(() => { resolved = true; });
+
+  assert.equal(callbacks.length, 1);
+  callbacks.shift()();
+  await Promise.resolve();
+  assert.equal(resolved, false);
+  assert.equal(callbacks.length, 1);
+
+  callbacks.shift()();
+  await pending;
+  assert.equal(resolved, true);
+});
 
 test('scrollbar compensation uses viewport minus document width and never goes negative', () => {
   assert.equal(scrollbarCompensation(1440, 1423), 17);
