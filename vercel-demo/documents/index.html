@@ -173,28 +173,28 @@
     <button class="icon-button modal__close" type="button" aria-label="Закрыть окно" data-modal-close><svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
     <p class="eyebrow">Расчёт стоимости</p>
     <h2 id="lead-dialog-title">Обсудим вашу задачу</h2>
-    <p>Оставьте контакты. Специалист уточнит комплектацию и подготовит предложение.</p>
-    <form class="lead-form" action="#demo-form" method="post" data-lead-form novalidate>
+    <p>Оставьте контакты. Подготовим предложение под вашу задачу.</p>
+    <form class="lead-form lead-form--compact" action="#demo-form" method="post" data-lead-form novalidate>
   <input type="hidden" name="source" value="/documents/">
   <div class="honeypot" aria-hidden="true"><label for="modal-lead-website">Сайт</label><input id="modal-lead-website" name="website" tabindex="-1" autocomplete="off"></div>
   <div class="field-grid">
-    <div class="field">
+    <div class="field field--name">
       <label for="modal-lead-name">Имя <span aria-hidden="true">*</span></label>
       <input id="modal-lead-name" name="name" autocomplete="name" required minlength="2" maxlength="80" aria-describedby="modal-lead-name-error">
       <span class="field__error" id="modal-lead-name-error" data-error-for="name"></span>
     </div>
-    <div class="field">
+    <div class="field field--phone">
       <label for="modal-lead-phone">Телефон <span aria-hidden="true">*</span></label>
       <input id="modal-lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone aria-describedby="modal-lead-phone-error">
       <span class="field__error" id="modal-lead-phone-error" data-error-for="phone"></span>
     </div>
   </div>
-  <div class="field">
+  <div class="field field--email">
     <label for="modal-lead-email">Email</label>
     <input id="modal-lead-email" name="email" type="email" autocomplete="email" maxlength="160" aria-describedby="modal-lead-email-error">
     <span class="field__error" id="modal-lead-email-error" data-error-for="email"></span>
   </div>
-  <div class="field">
+  <div class="field field--message">
     <label for="modal-lead-message">Что нужно рассчитать?</label>
     <textarea id="modal-lead-message" name="message" rows="4" maxlength="3000" aria-describedby="modal-lead-message-error"></textarea>
     <span class="field__error" id="modal-lead-message-error" data-error-for="message"></span>

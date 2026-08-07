@@ -1,7 +1,7 @@
 import { deleteRussianPhoneDigit, formatRussianPhone, isCompleteRussianPhone } from './phone-mask.js';
 import { readCatalogView, saveCatalogView } from './catalog-view.js';
 import { hasConsent, saveConsent } from './consent.js';
-import { transitionTimeout } from './overlay-motion.js';
+import { afterNextPaint, transitionTimeout } from './overlay-motion.js';
 import { createScrollLock } from './scroll-lock.js';
 
 const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -39,14 +39,7 @@ function setupMenu() {
   let state = 'closed';
   let menuLocked = false;
 
-  const close = async ({ restoreFocus = true } = {}) => {
-    if (state === 'closed' || state === 'closing') return;
-    state = 'closing';
-    menu.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Открыть меню');
-    await transitionTimeout(panel, 360);
-    if (state !== 'closing') return;
+  const finishClose = (restoreFocus) => {
     menu.hidden = true;
     state = 'closed';
     setPageInert(false, menu);
@@ -56,7 +49,21 @@ function setupMenu() {
     }
     if (restoreFocus) focusWithoutScroll(toggle);
   };
-  const open = () => {
+
+  const close = async ({ restoreFocus = true, immediate = false } = {}) => {
+    if (state === 'closed' || state === 'closing') return;
+    state = 'closing';
+    menu.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Открыть меню');
+    if (immediate) {
+      finishClose(restoreFocus);
+      return;
+    }
+    await transitionTimeout(panel, 360);
+    if (state === 'closing') finishClose(restoreFocus);
+  };
+  const open = async () => {
     if (state === 'open' || state === 'opening') return;
     state = 'opening';
     menu.hidden = false;
@@ -67,19 +74,18 @@ function setupMenu() {
       menuLocked = true;
     }
     setPageInert(true, menu);
-    requestAnimationFrame(() => {
-      if (state !== 'opening') return;
-      menu.classList.add('is-open');
-      state = 'open';
-      focusWithoutScroll(closeButton ?? panel ?? menu);
-    });
+    await afterNextPaint();
+    if (state !== 'opening') return;
+    menu.classList.add('is-open');
+    state = 'open';
+    focusWithoutScroll(closeButton ?? panel ?? menu);
   };
 
   toggle.addEventListener('click', () => state === 'closed' || state === 'closing' ? open() : close());
   closeButton?.addEventListener('click', () => close());
   menu.addEventListener('click', (event) => {
     if (event.target === menu) close();
-    else if (event.target.closest('a')) close({ restoreFocus: false });
+    else if (event.target.closest('a')) close({ restoreFocus: false, immediate: true });
   });
   menu.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') close();

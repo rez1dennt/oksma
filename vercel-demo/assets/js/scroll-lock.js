@@ -5,6 +5,15 @@ export function createScrollLock(viewport, documentElement, body) {
   let savedX = 0;
   let savedY = 0;
 
+  const release = () => {
+    body.classList.remove('is-locked');
+    documentElement.classList.remove('is-scroll-locked');
+    documentElement.style.removeProperty('--scrollbar-compensation');
+    if (viewport.scrollX !== savedX || viewport.scrollY !== savedY) {
+      viewport.scrollTo(savedX, savedY);
+    }
+  };
+
   return {
     lock() {
       if (count === 0) {
@@ -12,8 +21,7 @@ export function createScrollLock(viewport, documentElement, body) {
         savedY = viewport.scrollY;
         const compensation = scrollbarCompensation(viewport.innerWidth, documentElement.clientWidth);
         documentElement.style.setProperty('--scrollbar-compensation', `${compensation}px`);
-        documentElement.style.setProperty('--scroll-lock-x', `${-savedX}px`);
-        documentElement.style.setProperty('--scroll-lock-y', `${-savedY}px`);
+        documentElement.classList.add('is-scroll-locked');
         body.classList.add('is-locked');
       }
       count += 1;
@@ -21,11 +29,7 @@ export function createScrollLock(viewport, documentElement, body) {
     unlock() {
       count = Math.max(0, count - 1);
       if (count !== 0 || !body.classList.contains('is-locked')) return;
-      body.classList.remove('is-locked');
-      documentElement.style.removeProperty('--scrollbar-compensation');
-      documentElement.style.removeProperty('--scroll-lock-x');
-      documentElement.style.removeProperty('--scroll-lock-y');
-      viewport.scrollTo(savedX, savedY);
+      release();
     },
     isLocked() {
       return count > 0;
