@@ -49,6 +49,9 @@ test('layout renders the shared accessible shell', function (): void {
     truthy(str_contains($html, 'logo-oksma-footer-gold.webp'));
     truthy(str_contains($html, '+7 937 435-17-00'));
     truthy(str_contains($html, '<meta name="theme-color" content="#25302d">'));
+    truthy(str_contains($html, 'class="lead-form lead-form--compact"'));
+    truthy(str_contains($html, 'class="field field--phone"'));
+    truthy(str_contains($html, 'class="field field--message"'));
     $headerClose = strpos($html, '</header>');
     $mobileDrawer = strpos($html, 'class="mobile-menu"');
     truthy($headerClose !== false && $mobileDrawer !== false && $headerClose < $mobileDrawer);
@@ -135,4 +138,15 @@ test('mobile overlays define deterministic tokenized motion', function (): void 
     truthy((bool) preg_match('/\.mobile-menu__panel\s*\{[^}]*opacity:\s*0/s', $css));
     truthy((bool) preg_match('/\.mobile-menu\.is-open \.mobile-menu__panel\s*\{[^}]*opacity:\s*1/s', $css));
     truthy((bool) preg_match('/@media \(prefers-reduced-motion: reduce\).*?\.mobile-menu__panel\s*\{[^}]*transform:\s*none/s', $css));
+});
+
+test('compact modal form fits normal mobile viewports without clipping', function (): void {
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+
+    truthy((bool) preg_match('/\.modal__dialog\s*\{[^}]*100dvh/s', $css));
+    truthy((bool) preg_match('/\.lead-form--compact\s*\{[^}]*grid-template-columns:\s*repeat\(2,/s', $css));
+    truthy((bool) preg_match('/\.lead-form--compact \.field-grid\s*\{[^}]*display:\s*contents/s', $css));
+    truthy(str_contains($css, '.lead-form--compact .field__error:empty'));
+    truthy(str_contains($css, '.lead-form--compact .form-status:empty'));
+    truthy((bool) preg_match('/@media \(max-width: 22em\).*?\.lead-form--compact \.field--phone/s', $css));
 });
