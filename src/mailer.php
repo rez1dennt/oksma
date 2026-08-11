@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use PHPMailer\PHPMailer\PHPMailer;
-
 interface LeadMailer
 {
     public function send(array $lead): void;
@@ -29,37 +27,82 @@ function lead_email_body(array $lead): string
     ]);
 }
 
-final class SmtpLeadMailer implements LeadMailer
+function reject_mail_header_breaks(string $value): void
 {
-    public function __construct(private readonly array $config)
-    {
+    if (str_contains($value, "\r") || str_contains($value, "\n")) {
+        throw new InvalidArgumentException('Mail header values cannot contain line breaks.');
+    }
+}
+
+function validate_mailbox(string $address): void
+{
+    reject_mail_header_breaks($address);
+    if (filter_var($address, FILTER_VALIDATE_EMAIL) === false) {
+        throw new InvalidArgumentException('Invalid mail address.');
+    }
+}
+
+function encode_mail_header(string $value): string
+{
+    reject_mail_header_breaks($value);
+    return '=?UTF-8?B?' . base64_encode($value) . '?=';
+}
+
+function build_lead_mail_headers(array $lead, string $fromAddress, string $fromName): array
+{
+    validate_mailbox($fromAddress);
+    reject_mail_header_breaks($fromName);
+
+    $headers = [
+        'MIME-Version: 1.0',
+        'Content-Type: text/plain; charset=UTF-8',
+        'Content-Transfer-Encoding: 8bit',
+        'From: ' . encode_mail_header($fromName) . ' <' . $fromAddress . '>',
+    ];
+
+    $replyAddress = (string) ($lead['email'] ?? '');
+    if ($replyAddress !== '') {
+        validate_mailbox($replyAddress);
+        $replyName = (string) ($lead['name'] ?? 'Посетитель сайта');
+        $headers[] = 'Reply-To: ' . encode_mail_header($replyName) . ' <' . $replyAddress . '>';
+    }
+
+    return $headers;
+}
+
+final class NativeMailLeadMailer implements LeadMailer
+{
+    private readonly Closure $mailFunction;
+
+    public function __construct(
+        private readonly string $recipient,
+        private readonly string $fromAddress,
+        private readonly string $fromName = 'Сайт ОКСМА',
+        ?Closure $mailFunction = null,
+    ) {
+        validate_mailbox($this->recipient);
+        validate_mailbox($this->fromAddress);
+        reject_mail_header_breaks($this->fromName);
+        $this->mailFunction = $mailFunction ?? static fn (
+            string $to,
+            string $subject,
+            string $message,
+            string $headers,
+        ): bool => mail($to, $subject, $message, $headers);
     }
 
     public function send(array $lead): void
     {
-        if (!class_exists(PHPMailer::class)) {
-            throw new RuntimeException('PHPMailer is not installed.');
-        }
+        $headers = build_lead_mail_headers($lead, $this->fromAddress, $this->fromName);
+        $sent = ($this->mailFunction)(
+            $this->recipient,
+            encode_mail_header('Заявка с сайта ОКСМА — ' . (string) $lead['name']),
+            lead_email_body($lead),
+            implode("\r\n", $headers),
+        );
 
-        $mail = new PHPMailer(true);
-        $mail->isSMTP();
-        $mail->Host = (string) $this->config['host'];
-        $mail->Port = (int) $this->config['port'];
-        $mail->SMTPAuth = true;
-        $mail->Username = (string) $this->config['username'];
-        $mail->Password = (string) $this->config['password'];
-        $mail->CharSet = PHPMailer::CHARSET_UTF8;
-        $mail->SMTPSecure = ($this->config['encryption'] ?? 'smtps') === 'starttls'
-            ? PHPMailer::ENCRYPTION_STARTTLS
-            : PHPMailer::ENCRYPTION_SMTPS;
-        $mail->setFrom((string) $this->config['from_address'], (string) $this->config['from_name']);
-        $mail->addAddress((string) $this->config['recipient']);
-        if ($lead['email'] !== '') {
-            $mail->addReplyTo($lead['email'], $lead['name']);
+        if (!$sent) {
+            throw new RuntimeException('Native mail transport rejected the lead.');
         }
-        $mail->Subject = 'Заявка с сайта ОКСМА — ' . $lead['name'];
-        $mail->Body = lead_email_body($lead);
-        $mail->AltBody = $mail->Body;
-        $mail->send();
     }
 }

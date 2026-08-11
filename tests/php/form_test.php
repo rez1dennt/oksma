@@ -75,3 +75,84 @@ test('mailer abstraction receives sanitized lead data', function (): void {
     deliver_lead($lead, $fake);
     same('+79374351700', $fake->received['phone']);
 });
+
+test('native mailer sends a utf8 lead to the approved mailbox', function (): void {
+    $calls = [];
+    $mailer = new NativeMailLeadMailer(
+        'oksmaprom@yandex.ru',
+        'oksmaprom@yandex.ru',
+        'Сайт ОКСМА',
+        static function (string $to, string $subject, string $message, string $headers) use (&$calls): bool {
+            $calls[] = compact('to', 'subject', 'message', 'headers');
+            return true;
+        },
+    );
+    $lead = validate_lead_request(valid_lead_payload(), 1722945600, 'test-token')['data'];
+
+    $mailer->send($lead);
+
+    same(1, count($calls));
+    same('oksmaprom@yandex.ru', $calls[0]['to']);
+    truthy(str_contains($calls[0]['subject'], '=?UTF-8?B?'));
+    truthy(str_contains($calls[0]['message'], 'Иван Петров'));
+    truthy(str_contains($calls[0]['message'], '+79374351700'));
+    truthy(str_contains($calls[0]['headers'], 'From:'));
+    truthy(str_contains($calls[0]['headers'], '<oksmaprom@yandex.ru>'));
+    truthy(str_contains($calls[0]['headers'], 'Reply-To:'));
+    truthy(str_contains($calls[0]['headers'], '<ivan@example.ru>'));
+    same(false, str_contains($calls[0]['headers'], "\nBcc:"));
+});
+
+test('native mailer omits reply-to when the visitor email is empty', function (): void {
+    $headers = '';
+    $mailer = new NativeMailLeadMailer(
+        'oksmaprom@yandex.ru',
+        'oksmaprom@yandex.ru',
+        'Сайт ОКСМА',
+        static function (string $to, string $subject, string $message, string $capturedHeaders) use (&$headers): bool {
+            $headers = $capturedHeaders;
+            return true;
+        },
+    );
+    $lead = validate_lead_request(valid_lead_payload(['email' => '']), 1722945600, 'test-token')['data'];
+
+    $mailer->send($lead);
+
+    same(false, str_contains($headers, 'Reply-To:'));
+});
+
+test('native mailer reports a rejected system mail handoff', function (): void {
+    $mailer = new NativeMailLeadMailer(
+        'oksmaprom@yandex.ru',
+        'oksmaprom@yandex.ru',
+        'Сайт ОКСМА',
+        static fn (string $to, string $subject, string $message, string $headers): bool => false,
+    );
+    $lead = validate_lead_request(valid_lead_payload(), 1722945600, 'test-token')['data'];
+    $thrown = false;
+
+    try {
+        $mailer->send($lead);
+    } catch (RuntimeException $error) {
+        $thrown = true;
+        same('Native mail transport rejected the lead.', $error->getMessage());
+    }
+
+    truthy($thrown);
+});
+
+test('native mailer rejects line breaks in configured headers', function (): void {
+    $thrown = false;
+
+    try {
+        new NativeMailLeadMailer(
+            'oksmaprom@yandex.ru',
+            'oksmaprom@yandex.ru',
+            "Сайт ОКСМА\r\nBcc: attacker@example.ru",
+        );
+    } catch (InvalidArgumentException) {
+        $thrown = true;
+    }
+
+    truthy($thrown);
+});
