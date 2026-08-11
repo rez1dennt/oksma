@@ -99,22 +99,17 @@ test('catalog cards and product galleries show complete source frames', function
     truthy(!str_contains($css, '.product-card:hover .product-card__media img { transform: scale'));
 });
 
-test('client supplied pzk 15 frame and corrected ppts photos are preserved', function () use ($root): void {
-    $pzk15 = $root . '/assets/images/products/pzk/pzk-15-1.webp';
-    truthy(is_file($pzk15));
-    $size = getimagesize($pzk15);
-    truthy(is_array($size));
-    same([717, 534], [$size[0], $size[1]]);
-    same('image/webp', $size['mime']);
-
-    same(
-        'd31d0ee29b515cdbbab7f76259f4f1b7ce584a6b7280d4262a7678c9d831e083',
-        hash_file('sha256', $root . '/assets/images/products/ppts/ppts-12-1.webp')
-    );
-    same(
-        'b5483dda120e24e5181f5a4d0c0be694d6b52bde493e4117c0b8c8b62c4647d9',
-        hash_file('sha256', $root . '/assets/images/products/ppts/ppts-20-1.webp')
-    );
+test('all primary product images use the approved white catalog canvas', function () use ($root): void {
+    foreach (catalog_products() as $product) {
+        $path = $product['images'][0] ?? '';
+        truthy($path !== '');
+        $file = $root . str_replace('/', DIRECTORY_SEPARATOR, $path);
+        truthy(is_file($file));
+        $size = getimagesize($file);
+        truthy(is_array($size));
+        same([1200, 900], [$size[0], $size[1]]);
+        same('image/webp', $size['mime']);
+    }
 });
 
 test('site exposes an explicit favicon', function () use ($root): void {

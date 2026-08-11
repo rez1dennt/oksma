@@ -138,6 +138,22 @@ test('privacy publishes approved operator details and contact', function (): voi
     truthy(str_contains($html, 'id="cookies"'));
 });
 
+test('footer hides company requisites while privacy keeps operator details', function (): void {
+    $home = render_page('home', [
+        'seo' => seo_for_page('home'),
+        'categories' => catalog_categories(),
+        'schemas' => [],
+    ]);
+    truthy(!str_contains($home, 'ООО «СпецТехПром», ИНН 5258079050'));
+
+    $privacy = render_page('privacy', [
+        'seo' => seo_for_page('privacy'),
+        'schemas' => [],
+    ]);
+    truthy(str_contains($privacy, 'ООО «СпецТехПром»'));
+    truthy(str_contains($privacy, '5258079050'));
+});
+
 test('documents page renders two accessible declaration cards', function (): void {
     $html = render_page('documents', [
         'seo' => seo_for_page('documents'),
