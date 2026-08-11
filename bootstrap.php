@@ -10,11 +10,6 @@ if (!function_exists('app_config')) {
     }
 }
 
-$autoload = __DIR__ . '/vendor/autoload.php';
-if (is_file($autoload)) {
-    require_once $autoload;
-}
-
 require_once __DIR__ . '/src/catalog.php';
 require_once __DIR__ . '/src/documents.php';
 require_once __DIR__ . '/src/router.php';

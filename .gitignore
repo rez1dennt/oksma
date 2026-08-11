@@ -1,8 +1,5 @@
 .worktrees/
 .serena/
-vendor/
-tools/composer.phar
-config/mail.php
 storage/*.log
 .env
 node_modules/
