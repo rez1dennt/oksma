@@ -76,7 +76,6 @@ test('requested replacement product photography uses distinct source frames', fu
         '/assets/images/product-zsk-12-1.webp',
         '/assets/images/product-zsk-20-1.webp',
         '/assets/images/product-zsk-21-1.webp',
-        '/assets/images/product-pzk-15-1.webp',
     ];
     $hashes = [];
 
@@ -98,6 +97,24 @@ test('catalog cards and product galleries show complete source frames', function
     truthy((bool) preg_match('/\.gallery__stage img\s*\{[^}]*object-fit:\s*contain/s', $css));
     truthy((bool) preg_match('/\.gallery__thumbs img\s*\{[^}]*object-fit:\s*contain/s', $css));
     truthy(!str_contains($css, '.product-card:hover .product-card__media img { transform: scale'));
+});
+
+test('client supplied pzk 15 frame and corrected ppts photos are preserved', function () use ($root): void {
+    $pzk15 = $root . '/assets/images/products/pzk/pzk-15-1.webp';
+    truthy(is_file($pzk15));
+    $size = getimagesize($pzk15);
+    truthy(is_array($size));
+    same([717, 534], [$size[0], $size[1]]);
+    same('image/webp', $size['mime']);
+
+    same(
+        'd31d0ee29b515cdbbab7f76259f4f1b7ce584a6b7280d4262a7678c9d831e083',
+        hash_file('sha256', $root . '/assets/images/products/ppts/ppts-12-1.webp')
+    );
+    same(
+        'b5483dda120e24e5181f5a4d0c0be694d6b52bde493e4117c0b8c8b62c4647d9',
+        hash_file('sha256', $root . '/assets/images/products/ppts/ppts-20-1.webp')
+    );
 });
 
 test('site exposes an explicit favicon', function () use ($root): void {

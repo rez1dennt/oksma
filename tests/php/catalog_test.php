@@ -80,3 +80,21 @@ test('benefit cards map copy to the shared icon system', function (): void {
     truthy(str_contains($cards[1]['description'], 'условия работы'));
     truthy(str_contains($cards[2]['description'], 'регион России'));
 });
+
+test('client corrections map feed equipment to approved clean photography', function (): void {
+    same('/assets/images/category-feed-clean.webp', find_category('zagruzchiki-suhih-kormov')['image']);
+    same('/assets/images/product-pzk-10-1.webp', find_product('pzk-10')['images'][0]);
+    same('/assets/images/products/pzk/pzk-15-1.webp', find_product('pzk-15')['images'][0]);
+    same('/assets/images/product-zsk-10-1.webp', find_product('zsk-10')['images'][0]);
+    same('/assets/images/product-zsk-15-1.webp', find_product('zsk-15')['images'][0]);
+});
+
+test('ppts model records retain unique names urls and specifications', function (): void {
+    $ppts12 = find_product('ppts-12');
+    $ppts20 = find_product('ppts-20');
+
+    same('ППТС-12', $ppts12['name']);
+    same('12 000 кг', $ppts12['specs']['Грузоподъёмность']);
+    same('ППТС-20', $ppts20['name']);
+    same('20 000 кг', $ppts20['specs']['Грузоподъёмность']);
+});
