@@ -33,14 +33,8 @@ if (!$result['ok']) {
     ], $wantsJson);
 }
 
-$mailConfigPath = __DIR__ . '/config/mail.php';
-if (!is_file($mailConfigPath)) {
-    form_response(503, ['ok' => false, 'message' => 'Отправка ещё не настроена. Позвоните нам по указанному номеру.'], $wantsJson);
-}
-
 try {
-    $mailConfig = require $mailConfigPath;
-    deliver_lead($result['data'], new SmtpLeadMailer($mailConfig));
+    deliver_lead($result['data'], create_app_lead_mailer(app_config()));
     rotate_csrf_token();
     form_response(200, ['ok' => true, 'message' => 'Спасибо! Заявка отправлена, мы свяжемся с вами.'], $wantsJson);
 } catch (Throwable $error) {

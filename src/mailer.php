@@ -106,3 +106,11 @@ final class NativeMailLeadMailer implements LeadMailer
         }
     }
 }
+
+function create_app_lead_mailer(array $config, ?Closure $mailFunction = null): NativeMailLeadMailer
+{
+    $address = (string) ($config['email'] ?? '');
+    $name = 'Сайт ' . (string) ($config['name'] ?? 'ОКСМА');
+
+    return new NativeMailLeadMailer($address, $address, $name, $mailFunction);
+}

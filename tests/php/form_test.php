@@ -156,3 +156,25 @@ test('native mailer rejects line breaks in configured headers', function (): voi
 
     truthy($thrown);
 });
+
+test('application mailer uses the public contact without smtp configuration', function () use ($root): void {
+    $calls = [];
+    $capture = static function (string $to, string $subject, string $message, string $headers) use (&$calls): bool {
+        $calls[] = compact('to', 'subject', 'message', 'headers');
+        return true;
+    };
+    $mailer = create_app_lead_mailer([
+        'name' => 'ОКСМА',
+        'email' => 'oksmaprom@yandex.ru',
+    ], $capture);
+    $lead = validate_lead_request(valid_lead_payload(), 1722945600, 'test-token')['data'];
+
+    $mailer->send($lead);
+
+    same('oksmaprom@yandex.ru', $calls[0]['to']);
+    truthy(str_contains($calls[0]['headers'], '<oksmaprom@yandex.ru>'));
+    $submit = file_get_contents($root . '/submit.php');
+    same(false, str_contains($submit, 'config/mail.php'));
+    same(false, str_contains($submit, 'SmtpLeadMailer'));
+    truthy(str_contains($submit, 'create_app_lead_mailer(app_config())'));
+});
