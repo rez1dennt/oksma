@@ -25,6 +25,5 @@
   </div>
   <div class="container site-footer__legal">
     <span>© <?= date('Y') ?> <?= e($config['name']) ?></span>
-    <span><?= e($config['legal_name']) ?>, ИНН <?= e($config['requisites']['inn']) ?></span>
   </div>
 </footer>
