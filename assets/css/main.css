@@ -43,7 +43,9 @@ p { max-width: var(--measure); }
 .site-header__inner { min-height: var(--space-20); display: flex; align-items: center; gap: var(--space-6); }
 .brand { flex: 0 0 auto; display: inline-flex; align-items: center; }
 .brand img { width: 10.25rem; height: auto; }
-.brand--header-gold img { width: clamp(calc(var(--space-20) + var(--space-16)), 15vw, calc(var(--space-20) * 2.25)); }
+.brand--header-gold { min-width: 0; gap: clamp(var(--space-2), 1vw, var(--space-3)); }
+.brand--header-gold .brand__mark { width: clamp(var(--space-8), 4vw, calc(var(--space-12) - var(--space-1))); aspect-ratio: 1; object-fit: contain; }
+.brand--header-gold .brand__wordmark { width: clamp(calc(var(--space-20) + var(--space-8) - var(--space-1)), 13vw, calc(var(--space-20) + var(--space-20) + var(--space-4) + var(--space-1))); }
 .brand--footer-mark img { width: calc(var(--space-20) + var(--space-12) + var(--space-1)); }
 .desktop-nav { display: none; margin-inline: auto; }
 .desktop-nav ul, .mobile-menu ul, .site-footer ul, .breadcrumbs ol { margin: 0; padding: 0; list-style: none; }

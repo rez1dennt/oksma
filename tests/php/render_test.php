@@ -150,3 +150,16 @@ test('compact modal form fits normal mobile viewports without clipping', functio
     truthy(str_contains($css, '.lead-form--compact .form-status:empty'));
     truthy((bool) preg_match('/@media \(max-width: 22em\).*?\.lead-form--compact\s*\{[^}]*gap:\s*var\(--space-2\)/s', $css));
 });
+
+test('header pairs the round oksma mark with the gold wordmark', function (): void {
+    $header = (string) file_get_contents(dirname(__DIR__, 2) . '/templates/partials/header.php');
+    $css = (string) file_get_contents(dirname(__DIR__, 2) . '/assets/css/main.css');
+
+    truthy(str_contains($header, 'class="brand__mark"'));
+    truthy(str_contains($header, 'logo-oksma-footer-gold.webp'));
+    truthy(str_contains($header, 'class="brand__wordmark"'));
+    truthy(str_contains($header, 'logo-oksma-header-gold.webp'));
+    truthy((bool) preg_match('/\.brand--header-gold\s*\{[^}]*gap:/s', $css));
+    truthy((bool) preg_match('/\.brand--header-gold \.brand__mark\s*\{[^}]*aspect-ratio:\s*1/s', $css));
+    truthy((bool) preg_match('/\.brand--header-gold \.brand__wordmark\s*\{[^}]*clamp\(/s', $css));
+});
