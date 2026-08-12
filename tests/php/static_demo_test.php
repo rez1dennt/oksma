@@ -16,7 +16,7 @@ test('static demo enumerates every public route', function (): void {
     }
 
     $routes = static_demo_routes();
-    same(38, count($routes));
+    same(37, count($routes));
     same('index.html', $routes['/']);
     same('catalog/zagruzchiki-suhih-kormov/index.html', $routes['/catalog/zagruzchiki-suhih-kormov/']);
     same('product/pc-11v/index.html', $routes['/product/pc-11v/']);
@@ -26,6 +26,7 @@ test('static demo enumerates every public route', function (): void {
     same('sitemap.xml', $routes['/sitemap.xml']);
     same('robots.txt', $routes['/robots.txt']);
     truthy(!isset($routes['/catalog/zapchasti/']));
+    truthy(!isset($routes['/product/ppts-20/']));
 });
 
 test('static demo transforms forms without changing source templates', function (): void {
@@ -72,13 +73,14 @@ test('static demo exporter builds an isolated deployable tree', function (): voi
 
     try {
         $report = static_demo_export($root, $output);
-        same(38, $report['pages']);
+        same(37, $report['pages']);
         same([], $report['errors']);
         truthy($report['assets'] > 0);
         truthy(is_file($output . '/index.html'));
         truthy(is_file($output . '/product/pc-11v/index.html'));
         truthy(is_file($output . '/product/duk-2/index.html'));
         truthy(is_file($output . '/product/duk-tank-1900/index.html'));
+        truthy(!is_file($output . '/product/ppts-20/index.html'));
         truthy(is_file($output . '/assets/css/main.css'));
         truthy(is_file($output . '/assets/js/demo-mode.js'));
         truthy(is_file($output . '/vercel.json'));
@@ -109,4 +111,6 @@ test('static demo removal rejects unsafe targets', function (): void {
 test('tracked Vercel demo matches the public route contract', function (): void {
     $output = dirname(__DIR__, 2) . '/vercel-demo';
     same([], static_demo_validate_output($output, static_demo_routes()));
+    truthy(!is_file($output . '/product/ppts-20/index.html'));
+    truthy(!is_file($output . '/assets/images/products/ppts/ppts-20-1.webp'));
 });

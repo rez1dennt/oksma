@@ -69,7 +69,6 @@ test('requested replacement product photography uses distinct source frames', fu
         '/assets/images/products/pgts/pgts-3-1.webp',
         '/assets/images/products/pgts/pgts-6-5-1.webp',
         '/assets/images/products/ppts/ppts-12-1.webp',
-        '/assets/images/products/ppts/ppts-20-1.webp',
         '/assets/images/products/zsk/zsk-10-1.webp',
         '/assets/images/products/zsk/zsk-7-1.webp',
         '/assets/images/products/pc/pc-2-1.webp',
@@ -88,6 +87,10 @@ test('requested replacement product photography uses distinct source frames', fu
         truthy(!isset($hashes[$hash]));
         $hashes[$hash] = true;
     }
+});
+
+test('removed ppts-20 has no public product image', function () use ($root): void {
+    truthy(!is_file($root . '/assets/images/products/ppts/ppts-20-1.webp'));
 });
 
 test('catalog cards and product galleries show complete source frames', function () use ($root): void {

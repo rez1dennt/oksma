@@ -49,10 +49,22 @@ def declaration_ids(family: str) -> list[str]:
     return []
 
 
+def load_public_exclusions(path: Path) -> set[str]:
+    if not path.is_file():
+        return set()
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return {str(model) for model in payload.get("models", [])}
+
+
+def public_products(products: list[dict], exclusions: set[str]) -> list[dict]:
+    return [item for item in products if item["model"] not in exclusions]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build PHP catalog data from verified proposal extraction")
     parser.add_argument("--products", default=".tmp/catalog-import/products.normalized.json")
     parser.add_argument("--selections", default="tools/catalog_import/image_selections.json")
+    parser.add_argument("--exclusions", default="tools/catalog_import/public_exclusions.json")
     parser.add_argument("--output", default="data/imported-products.php")
     return parser.parse_args()
 
@@ -60,6 +72,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     products = json.loads(Path(args.products).read_text(encoding="utf-8"))
+    products = public_products(products, load_public_exclusions(Path(args.exclusions)))
     selections = json.loads(Path(args.selections).read_text(encoding="utf-8"))
 
     slugs_by_category: dict[str, list[str]] = {}

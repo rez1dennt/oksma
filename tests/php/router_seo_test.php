@@ -82,6 +82,11 @@ test('removed spare-parts category route is not found', function (): void {
     same('not-found', resolve_route('/catalog/zapchasti/')['name']);
 });
 
+test('removed ppts-20 route is not found and absent from sitemap', function (): void {
+    same('not-found', resolve_route('/product/ppts-20/')['name']);
+    truthy(!in_array('https://example.ru/product/ppts-20/', sitemap_urls(), true));
+});
+
 test('documents page is indexable canonical and present in sitemap', function (): void {
     $seo = seo_for_page('documents');
     same('https://example.ru/documents/', $seo['canonical']);

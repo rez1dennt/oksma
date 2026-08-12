@@ -47,7 +47,7 @@ test('commercial proposal archive publishes all verified models', function (): v
         'lowbed-trailer',
         'pc-2', 'pc-5v', 'pc-6', 'pc-11v', 'pc-12v', 'pc-20',
         'pgts-3', 'pgts-6-5', 'pgts-9', 'pgts-12',
-        'ppts-9', 'ppts-12', 'ppts-15', 'ppts-18', 'ppts-20', 'ppts-20p',
+        'ppts-9', 'ppts-12', 'ppts-15', 'ppts-18', 'ppts-20p',
         'pzk-10',
         'zsk-7', 'zsk-10', 'zsk-15', 'zsk-15u',
     ];
@@ -91,12 +91,20 @@ test('client corrections map feed equipment to approved clean photography', func
 
 test('ppts model records retain unique names urls and specifications', function (): void {
     $ppts12 = find_product('ppts-12');
-    $ppts20 = find_product('ppts-20');
+    $ppts20p = find_product('ppts-20p');
 
     same('ППТС-12', $ppts12['name']);
     same('12 000 кг', $ppts12['specs']['Грузоподъёмность']);
-    same('ППТС-20', $ppts20['name']);
-    same('20 000 кг', $ppts20['specs']['Грузоподъёмность']);
+    same('ППТС-20П', $ppts20p['name']);
+    same('Не более 20 000 кг', $ppts20p['specs']['Грузоподъёмность']);
+});
+
+test('ppts-20 is completely removed from the public catalog and relationships', function (): void {
+    same(null, find_product('ppts-20'));
+
+    foreach (catalog_products() as $product) {
+        truthy(!in_array('ppts-20', $product['related'] ?? [], true), "{$product['slug']} still links to removed ppts-20");
+    }
 });
 
 test('duk commercial proposals publish the complete installation and tank', function (): void {

@@ -1,6 +1,7 @@
 param(
     [string]$ProductsFile = '.tmp\catalog-import\products.normalized.json',
     [string]$SelectionsFile = 'tools\catalog_import\image_selections.json',
+    [string]$ExclusionsFile = 'tools\catalog_import\public_exclusions.json',
     [string]$ExtractedRoot = '.tmp\catalog-import\extracted',
     [string]$OutputRoot = 'assets\images\products',
     [string]$SummaryFile = '.tmp\catalog-import\prepared-images.json'
@@ -14,9 +15,16 @@ if (-not (Test-Path -LiteralPath $magick)) {
 
 $products = Get-Content -Raw -LiteralPath $ProductsFile | ConvertFrom-Json
 $selections = Get-Content -Raw -LiteralPath $SelectionsFile | ConvertFrom-Json
+$exclusions = @()
+if (Test-Path -LiteralPath $ExclusionsFile) {
+    $exclusions = @((Get-Content -Raw -LiteralPath $ExclusionsFile | ConvertFrom-Json).models)
+}
 $results = @()
 
 foreach ($product in $products) {
+    if ($product.model -in $exclusions) {
+        continue
+    }
     $selectionProperty = $selections.PSObject.Properties[$product.model]
     if ($null -eq $selectionProperty) {
         throw "No image selection for model $($product.model)"
