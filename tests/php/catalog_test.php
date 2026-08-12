@@ -126,5 +126,30 @@ test('duk commercial proposals publish the complete installation and tank', func
     truthy(str_contains($tank['description'], 'УАЗ'));
     same(3, count($tank['benefits']));
 
-    same(2, count(products_for_category('dezinfekcionnye-ustanovki')));
+    same(3, count(products_for_category('dezinfekcionnye-ustanovki')));
+});
+
+test('duk m uaz profi is a separate sourced product without gazon specifications', function (): void {
+    $product = find_product('duk-m-uaz-profi');
+
+    truthy($product !== null);
+    if ($product === null) {
+        return;
+    }
+
+    same('ДУК М на базе УАЗ PROFI', $product['name']);
+    same('dezinfekcionnye-ustanovki', $product['category']);
+    same('/assets/images/products/duk/duk-m-uaz-profi-1.webp', $product['images'][0]);
+    same(3, count($product['benefits']));
+    truthy(count($product['applications'] ?? []) >= 3);
+    truthy(in_array('duk-2', $product['related'] ?? [], true));
+    truthy(in_array('duk-tank-1900', $product['related'] ?? [], true));
+    same('по согласованной комплектации', $product['specs']['Параметры установки']);
+
+    $serialized = json_encode($product, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+    foreach (['1 600 л', '1 500 л', '4 × 96 л', '2,5 кгс/см²', 'ЯМЗ-534'] as $borrowedValue) {
+        truthy(!str_contains($serialized, $borrowedValue), "Borrowed GAZon value found: {$borrowedValue}");
+    }
+
+    same(3, count(products_for_category('dezinfekcionnye-ustanovki')));
 });

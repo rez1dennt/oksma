@@ -121,6 +121,30 @@ test('duk product page explains configurable installation options', function ():
     same(2, substr_count($html, 'class="product-application-card"'));
 });
 
+test('duk m uaz profi product page explains purpose and application', function (): void {
+    $product = find_product('duk-m-uaz-profi');
+    truthy($product !== null);
+    if ($product === null) {
+        return;
+    }
+
+    $html = render_page('product', [
+        'seo' => seo_for_page('product', $product),
+        'product' => $product,
+        'category' => find_category($product['category']),
+        'related' => related_products($product),
+        'documents' => documents_for_product($product),
+        'schemas' => [product_schema($product)],
+    ]);
+
+    truthy(str_contains($html, 'ДУК М на базе УАЗ PROFI'));
+    truthy(str_contains($html, 'санитарной обработки'));
+    truthy(str_contains($html, 'Холодная и горячая обработка'));
+    truthy(str_contains($html, 'Пищевые и перерабатывающие предприятия'));
+    truthy(str_contains($html, 'Сельское хозяйство и ветеринария'));
+    same(4, substr_count($html, 'class="product-application-card"'));
+});
+
 test('product documents tab is conditional and uses the shared declaration data', function (): void {
     $pzk = find_product('pzk-10');
     $pzkHtml = render_page('product', [

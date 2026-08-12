@@ -113,6 +113,18 @@ test('approved pgts photo correction stays mapped to the requested models', func
     truthy(($selections['ПГТС-6.5']['copy_source'] ?? false) === true);
 });
 
+test('approved duk m uaz profi photo uses the selected clean catalog frame', function () use ($root): void {
+    $file = $root . '/assets/images/products/duk/duk-m-uaz-profi-1.webp';
+
+    truthy(is_file($file));
+    $image = getimagesize($file);
+    truthy(is_array($image));
+    same([1200, 900], [$image[0], $image[1]]);
+    same('image/webp', $image['mime']);
+    same('34fad06e55660a862d743127ea65b2e8413e1de34a4743c2025fd57bea99d630', hash_file('sha256', $file));
+    truthy(is_file($root . '/source-assets/client-corrections/2026-08-12/duk-m-uaz-profi/IMG_0929.HEIC'));
+});
+
 test('removed ppts-20 has no public product image', function () use ($root): void {
     truthy(!is_file($root . '/assets/images/products/ppts/ppts-20-1.webp'));
 });

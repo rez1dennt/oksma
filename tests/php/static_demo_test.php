@@ -16,7 +16,7 @@ test('static demo enumerates every public route', function (): void {
     }
 
     $routes = static_demo_routes();
-    same(37, count($routes));
+    same(38, count($routes));
     same('index.html', $routes['/']);
     same('catalog/zagruzchiki-suhih-kormov/index.html', $routes['/catalog/zagruzchiki-suhih-kormov/']);
     same('product/pc-11v/index.html', $routes['/product/pc-11v/']);
@@ -73,7 +73,7 @@ test('static demo exporter builds an isolated deployable tree', function (): voi
 
     try {
         $report = static_demo_export($root, $output);
-        same(37, $report['pages']);
+        same(38, $report['pages']);
         same([], $report['errors']);
         truthy($report['assets'] > 0);
         truthy(is_file($output . '/index.html'));
