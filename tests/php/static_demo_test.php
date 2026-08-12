@@ -16,10 +16,12 @@ test('static demo enumerates every public route', function (): void {
     }
 
     $routes = static_demo_routes();
-    same(36, count($routes));
+    same(38, count($routes));
     same('index.html', $routes['/']);
     same('catalog/zagruzchiki-suhih-kormov/index.html', $routes['/catalog/zagruzchiki-suhih-kormov/']);
     same('product/pc-11v/index.html', $routes['/product/pc-11v/']);
+    same('product/duk-2/index.html', $routes['/product/duk-2/']);
+    same('product/duk-tank-1900/index.html', $routes['/product/duk-tank-1900/']);
     same('404.html', $routes['/404.html']);
     same('sitemap.xml', $routes['/sitemap.xml']);
     same('robots.txt', $routes['/robots.txt']);
@@ -70,11 +72,13 @@ test('static demo exporter builds an isolated deployable tree', function (): voi
 
     try {
         $report = static_demo_export($root, $output);
-        same(36, $report['pages']);
+        same(38, $report['pages']);
         same([], $report['errors']);
         truthy($report['assets'] > 0);
         truthy(is_file($output . '/index.html'));
         truthy(is_file($output . '/product/pc-11v/index.html'));
+        truthy(is_file($output . '/product/duk-2/index.html'));
+        truthy(is_file($output . '/product/duk-tank-1900/index.html'));
         truthy(is_file($output . '/assets/css/main.css'));
         truthy(is_file($output . '/assets/js/demo-mode.js'));
         truthy(is_file($output . '/vercel.json'));

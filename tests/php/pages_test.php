@@ -98,6 +98,29 @@ test('product renders gallery tabs specifications and related items', function (
     truthy(str_contains($html, 'Исполнение и оснащение согласуем под ваши условия работы.'));
 });
 
+test('duk product page explains configurable installation options', function (): void {
+    $product = find_product('duk-2');
+    truthy($product !== null);
+    if ($product === null) {
+        return;
+    }
+
+    $html = render_page('product', [
+        'seo' => seo_for_page('product', $product),
+        'product' => $product,
+        'category' => find_category($product['category']),
+        'related' => related_products($product),
+        'documents' => documents_for_product($product),
+        'schemas' => [product_schema($product)],
+    ]);
+
+    truthy(str_contains($html, 'Варианты исполнения'));
+    truthy(str_contains($html, 'Комплектная установка ДУК-2'));
+    truthy(str_contains($html, 'Цистерна под ваше шасси'));
+    truthy(str_contains($html, '«ГАЗон» или УАЗ'));
+    same(2, substr_count($html, 'class="product-application-card"'));
+});
+
 test('product documents tab is conditional and uses the shared declaration data', function (): void {
     $pzk = find_product('pzk-10');
     $pzkHtml = render_page('product', [

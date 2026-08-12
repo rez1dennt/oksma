@@ -98,3 +98,25 @@ test('ppts model records retain unique names urls and specifications', function 
     same('ППТС-20', $ppts20['name']);
     same('20 000 кг', $ppts20['specs']['Грузоподъёмность']);
 });
+
+test('duk commercial proposals publish the complete installation and tank', function (): void {
+    $duk = find_product('duk-2');
+    $tank = find_product('duk-tank-1900');
+
+    truthy($duk !== null);
+    same('dezinfekcionnye-ustanovki', $duk['category']);
+    same('1 600 л (рабочая — 1 500 л)', $duk['specs']['Цистерна']);
+    same('4 × 96 л', $duk['specs']['Баки для дезрастворов']);
+    same('20 м либо 2 × 10 м', $duk['specs']['Раздаточный рукав']);
+    truthy(str_contains($duk['description'], 'ГАЗ-3308'));
+    same(3, count($duk['benefits']));
+
+    truthy($tank !== null);
+    same('dezinfekcionnye-ustanovki', $tank['category']);
+    same('1 900 л', $tank['specs']['Объём цистерны']);
+    same('6 мм', $tank['specs']['Толщина обечайки']);
+    truthy(str_contains($tank['description'], 'УАЗ'));
+    same(3, count($tank['benefits']));
+
+    same(2, count(products_for_category('dezinfekcionnye-ustanovki')));
+});

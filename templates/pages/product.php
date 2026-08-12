@@ -40,6 +40,29 @@
 
 <?= render_partial('product-benefits', ['benefits' => $product['benefits']]) ?>
 
+<?php if (($product['applications'] ?? []) !== []): ?>
+<section class="product-applications" aria-labelledby="product-applications-title">
+  <div class="container">
+    <header class="product-applications__heading">
+      <p class="eyebrow">Под вашу задачу</p>
+      <h2 id="product-applications-title">Варианты исполнения</h2>
+      <p>Подберём состав оборудования и способ монтажа после проверки исходных данных по шасси.</p>
+    </header>
+    <div class="product-applications__grid">
+      <?php foreach ($product['applications'] as $index => $application): ?>
+        <article class="product-application-card">
+          <span class="product-application-card__number" aria-hidden="true"><?= str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) ?></span>
+          <div>
+            <h3><?= e($application['title']) ?></h3>
+            <p><?= e($application['text']) ?></p>
+          </div>
+        </article>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <section class="section product-details">
   <div class="container">
     <div class="tabs" data-tabs>
