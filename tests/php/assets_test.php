@@ -89,6 +89,30 @@ test('requested replacement product photography uses distinct source frames', fu
     }
 });
 
+test('approved pgts photo correction stays mapped to the requested models', function () use ($root): void {
+    $pgts3 = $root . '/assets/images/products/pgts/pgts-3-1.webp';
+    $pgts65 = $root . '/assets/images/products/pgts/pgts-6-5-1.webp';
+
+    same('c82ac3aa512609247c9f8fcbe1d27c86436e592aa1387c1f5ed00f206981e5eb', hash_file('sha256', $pgts3));
+    same('54fe9fe90d9f9dd409768686c280380094d7cbaba53411f45121a6795e4e047d', hash_file('sha256', $pgts65));
+
+    $selections = json_decode(
+        (string) file_get_contents($root . '/tools/catalog_import/image_selections.json'),
+        true,
+        512,
+        JSON_THROW_ON_ERROR
+    );
+    same(
+        'source-assets/client-corrections/2026-08-12/pgts-photo-map/image2.jpeg',
+        $selections['ПГТС-3']['source'] ?? null
+    );
+    same(
+        'source-assets/client-corrections/2026-08-12/pgts-photo-map/pgts-6-5-approved.webp',
+        $selections['ПГТС-6.5']['source'] ?? null
+    );
+    truthy(($selections['ПГТС-6.5']['copy_source'] ?? false) === true);
+});
+
 test('removed ppts-20 has no public product image', function () use ($root): void {
     truthy(!is_file($root . '/assets/images/products/ppts/ppts-20-1.webp'));
 });

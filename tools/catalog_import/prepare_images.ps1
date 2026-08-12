@@ -30,13 +30,24 @@ foreach ($product in $products) {
         throw "No image selection for model $($product.model)"
     }
     $selection = $selectionProperty.Value
-    $candidateIndex = [int]$selection.candidate - 1
-    if ($candidateIndex -lt 0 -or $candidateIndex -ge $product.media_candidates.Count) {
-        throw "Invalid image candidate for model $($product.model)"
+    $approvedSource = $selection.PSObject.Properties['source']
+    $approvedSourcePath = if ($null -ne $approvedSource) { [string]$approvedSource.Value } else { '' }
+    if ($approvedSourcePath) {
+        $source = [IO.Path]::GetFullPath($approvedSourcePath.Replace('/', [IO.Path]::DirectorySeparatorChar))
+        if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
+            throw "Approved image source not found for model $($product.model): $approvedSourcePath"
+        }
+        $sourceLabel = $approvedSourcePath
+    } else {
+        $candidateIndex = [int]$selection.candidate - 1
+        if ($candidateIndex -lt 0 -or $candidateIndex -ge $product.media_candidates.Count) {
+            throw "Invalid image candidate for model $($product.model)"
+        }
+        $candidate = $product.media_candidates[$candidateIndex]
+        $relativeSource = $candidate.path.Replace('/', [IO.Path]::DirectorySeparatorChar)
+        $source = [IO.Path]::GetFullPath((Join-Path $ExtractedRoot $relativeSource))
+        $sourceLabel = $candidate.path
     }
-    $candidate = $product.media_candidates[$candidateIndex]
-    $relativeSource = $candidate.path.Replace('/', [IO.Path]::DirectorySeparatorChar)
-    $source = [IO.Path]::GetFullPath((Join-Path $ExtractedRoot $relativeSource))
     $dimensions = (& $magick identify -format '%w %h' $source).Split(' ')
     $width = [int]$dimensions[0]
     $height = [int]$dimensions[1]
@@ -45,19 +56,27 @@ foreach ($product in $products) {
 
     if ($selection.generate -eq $true -or $width -lt 640 -or $height -lt 480) {
         $results += [pscustomobject][ordered]@{
-            model = $product.model; status = 'generation-reference'; source = $candidate.path
+            model = $product.model; status = 'generation-reference'; source = $sourceLabel
             width = $width; height = $height; output = $null
         }
         continue
     }
 
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
-    & $magick $source -auto-orient -resize '1920x1920>' -strip -quality 84 -define 'webp:method=6' $output
+    $copySourceProperty = $selection.PSObject.Properties['copy_source']
+    $copySource = $null -ne $copySourceProperty -and $copySourceProperty.Value -eq $true
+    if ($copySource) {
+        Copy-Item -LiteralPath $source -Destination $output -Force
+    } elseif ($approvedSourcePath) {
+        & $magick $source -auto-orient -colorspace sRGB -resize '1080x810>' -background '#ffffff' -gravity center -extent 1200x900 -alpha remove -alpha off -strip -quality 88 -define 'webp:method=6' $output
+    } else {
+        & $magick $source -auto-orient -resize '1920x1920>' -strip -quality 84 -define 'webp:method=6' $output
+    }
     if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $output)) {
         throw "Image conversion failed for $($product.model)"
     }
     $results += [pscustomobject][ordered]@{
-        model = $product.model; status = 'published-original'; source = $candidate.path
+        model = $product.model; status = $(if ($approvedSourcePath) { 'published-approved-source' } else { 'published-original' }); source = $sourceLabel
         width = $width; height = $height; output = $output.Replace('\\', '/')
     }
 }
