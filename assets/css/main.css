@@ -312,6 +312,7 @@ p { max-width: var(--measure); }
   .product-benefits__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .product-applications__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spec-grid--single { grid-template-columns: minmax(0, 1fr); }
   .spec-list div { grid-template-columns: minmax(10rem, 1fr) auto; }
   .document-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .document-grid--product { grid-template-columns: 1fr; }

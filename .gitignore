@@ -4,5 +4,6 @@ storage/*.log
 .env
 node_modules/
 .tmp/
+source-assets/client-corrections/2026-08-12/zsk-commercial-proposals/
 __pycache__/
 *.py[cod]

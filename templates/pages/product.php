@@ -74,9 +74,9 @@
         <?php endif; ?>
       </div>
       <div class="tabs__panel" role="tabpanel" id="panel-description" aria-labelledby="tab-description">
-        <div class="spec-grid">
+        <div class="spec-grid<?= ($product['dimensions'] ?? []) === [] ? ' spec-grid--single' : '' ?>">
           <section><h2>Характеристики</h2><dl class="spec-list"><?php foreach ($product['specs'] as $label => $value): ?><div><dt><?= e($label) ?></dt><dd><?= e($value) ?></dd></div><?php endforeach; ?></dl></section>
-          <section><h2>Габариты</h2><dl class="spec-list"><?php foreach ($product['dimensions'] as $label => $value): ?><div><dt><?= e($label) ?></dt><dd><?= e($value) ?></dd></div><?php endforeach; ?></dl></section>
+          <?php if (($product['dimensions'] ?? []) !== []): ?><section><h2>Габариты</h2><dl class="spec-list"><?php foreach ($product['dimensions'] as $label => $value): ?><div><dt><?= e($label) ?></dt><dd><?= e($value) ?></dd></div><?php endforeach; ?></dl></section><?php endif; ?>
         </div>
         <div class="product-description"><h2>О модели</h2><p><?= e($product['description']) ?></p><p>Финальные характеристики, сроки изготовления и состав поставки фиксируются в коммерческом предложении после согласования задачи.</p></div>
       </div>

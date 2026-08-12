@@ -89,6 +89,58 @@ test('client corrections map feed equipment to approved clean photography', func
     same('/assets/images/product-zsk-15-1.webp', find_product('zsk-15')['images'][0]);
 });
 
+test('feed loader catalog omits duplicate dimensions and mentions seed drill loading', function (): void {
+    $category = find_category('zagruzchiki-suhih-kormov');
+    truthy($category !== null);
+    truthy(str_contains($category['summary'], 'сеял'));
+
+    foreach (products_for_category('zagruzchiki-suhih-kormov') as $product) {
+        truthy(!array_key_exists('dimensions', $product), "{$product['slug']} still exposes duplicate dimensions");
+        truthy(str_contains($product['summary'], 'сеял'), "{$product['slug']} card does not mention seed drill loading");
+        truthy(str_contains($product['description'], 'сеял'), "{$product['slug']} does not mention seed drill loading");
+        truthy(!str_contains($product['seo_description'], 'размер'), "{$product['slug']} SEO still promises removed dimensions");
+    }
+});
+
+test('zsk 20 and zsk 21 publish confirmed commercial proposal specifications', function (): void {
+    $zsk20 = find_product('zsk-20');
+    $zsk21 = find_product('zsk-21');
+
+    same([
+        'Вместимость бункера' => '17 м³',
+        'Количество секций' => '5 шт.',
+        'Минимальная длина монтажной рамы' => 'не менее 5 700 мм',
+        'Производительность' => '15 т/ч',
+        'Масса бункера' => '2 400 кг',
+        'Максимальная загрузка при плотности 0,65 т/м³' => '11 т',
+    ], $zsk20['specs']);
+    same([
+        'Вместимость бункера' => '20,5 м³',
+        'Количество секций' => '6 шт.',
+        'Минимальная длина монтажной рамы' => 'не менее 6 800 мм от кулисы КПП',
+        'Производительность' => '15 т/ч',
+        'Масса бункера' => '2 650 кг',
+        'Максимальная загрузка при плотности 0,65 т/м³' => '13,3 т',
+    ], $zsk21['specs']);
+
+    foreach ([$zsk20, $zsk21] as $product) {
+        truthy(str_contains($product['description'], 'зерна'));
+        truthy(str_contains($product['description'], 'сеял'));
+    }
+});
+
+test('pzk 15 keeps its identity with pzk 10 description and zsk 15 specifications', function (): void {
+    $pzk10 = find_product('pzk-10');
+    $pzk15 = find_product('pzk-15');
+    $zsk15 = find_product('zsk-15');
+
+    same($pzk10['description'], $pzk15['description']);
+    same($zsk15['specs'], $pzk15['specs']);
+    same('ПЗК-15', $pzk15['name']);
+    same('Прицепной загрузчик кормов', $pzk15['subtitle']);
+    same('/assets/images/products/pzk/pzk-15-1.webp', $pzk15['images'][0]);
+});
+
 test('ppts model records retain unique names urls and specifications', function (): void {
     $ppts12 = find_product('ppts-12');
     $ppts20p = find_product('ppts-20p');

@@ -60,6 +60,34 @@ def public_products(products: list[dict], exclusions: set[str]) -> list[dict]:
     return [item for item in products if item["model"] not in exclusions]
 
 
+def public_dimensions(family: str, dimensions: dict[str, str]) -> dict[str, str]:
+    if family in {"pzk", "zsk"}:
+        return {}
+    return dimensions
+
+
+def public_purpose(family: str, purpose: str) -> str:
+    if family in {"pzk", "zsk"}:
+        return (
+            "Предназначен для транспортировки сухих комбикормов и зерна, "
+            "загрузки их в наружные бункеры для хранения, а также загрузки "
+            "сеялок при посевных."
+        )
+    return purpose
+
+
+def public_seo_description(family: str, model: str) -> str:
+    if family in {"pzk", "zsk"}:
+        return (
+            f"{model}: характеристики и комплектация для перевозки комбикормов "
+            "и зерна, загрузки наружных бункеров и сеялок."
+        )
+    return (
+        f"Характеристики, размеры и комплектация {model}. "
+        "Запросите расчёт стоимости и срок изготовления."
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build PHP catalog data from verified proposal extraction")
     parser.add_argument("--products", default=".tmp/catalog-import/products.normalized.json")
@@ -90,7 +118,9 @@ def main() -> None:
         position = siblings.index(slug)
         related = [candidate for candidate in siblings[position + 1 :] + siblings[:position] if candidate != slug][:3]
         purpose = " ".join((item.get("purpose") or SUBTITLE_BY_FAMILY[family]).split())
+        purpose = public_purpose(family, purpose)
 
+        dimensions = public_dimensions(family, item.get("dimensions") or {})
         product = {
             "slug": slug,
             "category": category,
@@ -103,13 +133,14 @@ def main() -> None:
             "images": [f"/assets/images/products/{family}/{slug}-1.webp"],
             "benefits": BENEFITS_BY_FAMILY[family],
             "specs": item.get("specs") or {"Модель": model},
-            "dimensions": item.get("dimensions") or {},
             "equipment": item.get("equipment") or [],
             "related": related,
             "seo_title": f"{model} — {SUBTITLE_BY_FAMILY[family].lower()} ОКСМА",
-            "seo_description": f"Характеристики, размеры и комплектация {model}. Запросите расчёт стоимости и срок изготовления.",
+            "seo_description": public_seo_description(family, model),
             "source_documents": [doc["filename"] for doc in item.get("source_documents", [])],
         }
+        if dimensions:
+            product["dimensions"] = dimensions
         documents = declaration_ids(family)
         if documents:
             product["document_ids"] = documents

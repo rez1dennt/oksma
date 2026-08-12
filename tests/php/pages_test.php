@@ -98,6 +98,35 @@ test('product renders gallery tabs specifications and related items', function (
     truthy(str_contains($html, 'Исполнение и оснащение согласуем под ваши условия работы.'));
 });
 
+test('feed loader pages hide duplicate dimensions while other products retain them', function (): void {
+    $zsk = find_product('zsk-20');
+    $zskHtml = render_page('product', [
+        'seo' => seo_for_page('product', $zsk),
+        'product' => $zsk,
+        'category' => find_category($zsk['category']),
+        'related' => related_products($zsk),
+        'documents' => documents_for_product($zsk),
+        'schemas' => [product_schema($zsk)],
+    ]);
+    truthy(str_contains($zskHtml, '<h2>Характеристики</h2>'));
+    truthy(!str_contains($zskHtml, '<h2>Габариты</h2>'));
+    truthy(str_contains($zskHtml, 'class="spec-grid spec-grid--single"'));
+    truthy(str_contains($zskHtml, 'Максимальная загрузка при плотности'));
+
+    $duk = find_product('duk-2');
+    $dukHtml = render_page('product', [
+        'seo' => seo_for_page('product', $duk),
+        'product' => $duk,
+        'category' => find_category($duk['category']),
+        'related' => related_products($duk),
+        'documents' => documents_for_product($duk),
+        'schemas' => [product_schema($duk)],
+    ]);
+    truthy(str_contains($dukHtml, '<h2>Габариты</h2>'));
+    truthy(str_contains($dukHtml, 'class="spec-grid"'));
+    truthy(!str_contains($dukHtml, 'class="spec-grid spec-grid--single"'));
+});
+
 test('duk product page explains configurable installation options', function (): void {
     $product = find_product('duk-2');
     truthy($product !== null);
