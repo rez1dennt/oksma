@@ -42,7 +42,7 @@ test('product SEO contains canonical and Product schema without price', function
 
     $product = find_product('zsk-10');
     $seo = seo_for_page('product', $product);
-    same('https://example.ru/product/zsk-10/', $seo['canonical']);
+    same('https://oksmaprom.ru/product/zsk-10/', $seo['canonical']);
     same('index,follow', $seo['robots']);
     same('product', $seo['og_type']);
     same('Product', product_schema($product)['@type']);
@@ -71,10 +71,10 @@ test('sitemap contains only valid indexable routes', function (): void {
     }
 
     $urls = sitemap_urls();
-    truthy(in_array('https://example.ru/product/zsk-10/', $urls, true));
-    truthy(in_array('https://example.ru/privacy/', $urls, true));
-    truthy(!in_array('https://example.ru/catalog/zapchasti/', $urls, true));
-    truthy(!in_array('https://example.ru/404/', $urls, true));
+    truthy(in_array('https://oksmaprom.ru/product/zsk-10/', $urls, true));
+    truthy(in_array('https://oksmaprom.ru/privacy/', $urls, true));
+    truthy(!in_array('https://oksmaprom.ru/catalog/zapchasti/', $urls, true));
+    truthy(!in_array('https://oksmaprom.ru/404/', $urls, true));
     same(count($urls), count(array_unique($urls)));
 });
 
@@ -84,15 +84,15 @@ test('removed spare-parts category route is not found', function (): void {
 
 test('removed ppts-20 route is not found and absent from sitemap', function (): void {
     same('not-found', resolve_route('/product/ppts-20/')['name']);
-    truthy(!in_array('https://example.ru/product/ppts-20/', sitemap_urls(), true));
+    truthy(!in_array('https://oksmaprom.ru/product/ppts-20/', sitemap_urls(), true));
 });
 
 test('documents page is indexable canonical and present in sitemap', function (): void {
     $seo = seo_for_page('documents');
-    same('https://example.ru/documents/', $seo['canonical']);
+    same('https://oksmaprom.ru/documents/', $seo['canonical']);
     same('index,follow', $seo['robots']);
     truthy(str_contains($seo['title'], 'Документы'));
-    truthy(in_array('https://example.ru/documents/', sitemap_urls(), true));
+    truthy(in_array('https://oksmaprom.ru/documents/', sitemap_urls(), true));
 });
 
 test('not-found pages are explicitly non-indexable', function (): void {

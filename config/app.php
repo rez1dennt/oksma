@@ -6,7 +6,7 @@ return [
     'name' => 'ОКСМА',
     'legal_name' => 'ООО «СпецТехПром»',
     'description' => 'Производство и поставка промышленной техники с доставкой по России.',
-    'base_url' => rtrim((string) (getenv('SITE_URL') ?: 'https://example.ru'), '/'),
+    'base_url' => rtrim((string) (getenv('SITE_URL') ?: 'https://oksmaprom.ru'), '/'),
     'email' => 'oksmaprom@yandex.ru',
     'phones' => [
         ['display' => '+7 937 435-17-00', 'href' => '+79374351700', 'primary' => true],
